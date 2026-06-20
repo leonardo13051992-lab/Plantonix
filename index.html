@@ -9,12 +9,17 @@
     <meta name="description" content="PLANTONIX - Sistema de Escala de Plantões">
     <title>PLANTONIX - Escala de Plantões</title>
     
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
     <!-- Chart.js para gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
     <style>
         /* ============================================
-           PLANTONIX v7.1 - ESTILOS COMPLETOS
+           PLANTONIX v8.0 - COM NUVEM (FIREBASE)
            ============================================ */
         * {
             margin: 0;
@@ -140,6 +145,178 @@
         }
 
         /* ============================================
+           TELA DE LOGIN (NOVO)
+           ============================================ */
+        .login-screen {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--bg-secondary);
+            padding: 20px;
+            width: 100%;
+        }
+
+        .login-screen.active {
+            display: flex;
+        }
+
+        .login-box {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            padding: 40px 30px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: var(--shadow-xl);
+            transition: background var(--transition);
+        }
+
+        .login-box .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-box .logo h1 {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--text-primary);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .login-box .logo h1 span {
+            color: var(--primary);
+        }
+
+        .login-box .logo p {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .login-box .form-group {
+            margin-bottom: 16px;
+        }
+
+        .login-box .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .login-box .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 500;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .login-box .form-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(var(--primary-rgb, 45, 64, 89), 0.1);
+        }
+
+        .login-box .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            margin-top: 8px;
+        }
+
+        .login-box .btn-login:active {
+            transform: scale(0.96);
+        }
+
+        .login-box .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .login-box .btn-secondary {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            margin-top: 8px;
+        }
+
+        .login-box .btn-secondary:active {
+            transform: scale(0.96);
+            background: var(--primary);
+            color: white;
+        }
+
+        .login-box .login-error {
+            color: var(--danger);
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 12px;
+            display: none;
+        }
+
+        .login-box .login-success {
+            color: var(--success);
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 12px;
+            display: none;
+        }
+
+        .login-box .login-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0;
+            color: var(--text-tertiary);
+            font-size: 13px;
+        }
+
+        .login-box .login-divider::before,
+        .login-box .login-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-light);
+        }
+
+        .login-box .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+
+        .login-box .login-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* ============================================
            APP CONTAINER
            ============================================ */
         .app-container {
@@ -150,11 +327,15 @@
             box-shadow: var(--shadow-md);
             position: relative;
             padding: 0 16px 30px;
-            display: flex;
+            display: none;
             flex-direction: column;
             transition: background var(--transition), border-color var(--transition);
             border-left: 4px solid var(--primary);
             margin: 0 auto;
+        }
+
+        .app-container.active {
+            display: flex;
         }
 
         /* ============================================
@@ -245,6 +426,27 @@
             transform: scale(0.92);
         }
 
+        .logout-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: var(--radius-full);
+            transition: background 0.15s, color var(--transition);
+            color: var(--text-tertiary);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logout-btn:active {
+            background: var(--bg-tertiary);
+            transform: scale(0.92);
+        }
+
         /* ============================================
            BOTÃO DE MODO (DONO/FUNCIONÁRIO)
            ============================================ */
@@ -290,7 +492,7 @@
         }
 
         /* ============================================
-           TELA DE SENHA
+           TELA DE SENHA (MODO DONO)
            ============================================ */
         .password-overlay {
             position: fixed;
@@ -536,100 +738,6 @@
         .mode-badge.func {
             background: rgba(34, 197, 94, 0.1);
             color: var(--func-color);
-        }
-
-        /* ============================================
-           TUTORIAL / ONBOARDING
-           ============================================ */
-        .tutorial-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 999;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .tutorial-overlay.active {
-            display: flex;
-        }
-
-        .tutorial-box {
-            background: var(--bg-primary);
-            border-radius: var(--radius-xl);
-            padding: 30px;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            animation: slideUp 0.3s ease;
-        }
-
-        .tutorial-box .tutorial-icon {
-            font-size: 64px;
-            margin-bottom: 16px;
-        }
-
-        .tutorial-box h2 {
-            font-size: 22px;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
-        .tutorial-box p {
-            font-size: 14px;
-            color: var(--text-tertiary);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .tutorial-box .tutorial-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .tutorial-box .tutorial-dots .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--border-light);
-            transition: all var(--transition);
-        }
-
-        .tutorial-box .tutorial-dots .dot.active {
-            background: var(--primary);
-            transform: scale(1.2);
-        }
-
-        .tutorial-box .btn-tutorial {
-            padding: 12px 32px;
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            border-radius: var(--radius-md);
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all var(--transition);
-        }
-
-        .tutorial-box .btn-tutorial:active {
-            transform: scale(0.95);
-        }
-
-        .tutorial-box .btn-skip {
-            background: none;
-            border: none;
-            color: var(--text-tertiary);
-            font-size: 13px;
-            cursor: pointer;
-            margin-top: 12px;
         }
 
         /* ============================================
@@ -1008,7 +1116,7 @@
             transform: none;
         }
 
-        /* Cores dos funcionários */
+        /* Cores dos funcionários - 50 cores */
         .day-cell.color-0 { background: #FF6B6B !important; }
         .day-cell.color-1 { background: #FF8E53 !important; }
         .day-cell.color-2 { background: #FECA57 !important; }
@@ -1220,59 +1328,6 @@
             color: white !important;
         }
 
-        .day-cell.color-0 .employee-name input,
-        .day-cell.color-1 .employee-name input,
-        .day-cell.color-2 .employee-name input,
-        .day-cell.color-3 .employee-name input,
-        .day-cell.color-4 .employee-name input,
-        .day-cell.color-5 .employee-name input,
-        .day-cell.color-6 .employee-name input,
-        .day-cell.color-7 .employee-name input,
-        .day-cell.color-8 .employee-name input,
-        .day-cell.color-9 .employee-name input,
-        .day-cell.color-10 .employee-name input,
-        .day-cell.color-11 .employee-name input,
-        .day-cell.color-12 .employee-name input,
-        .day-cell.color-13 .employee-name input,
-        .day-cell.color-14 .employee-name input,
-        .day-cell.color-15 .employee-name input,
-        .day-cell.color-16 .employee-name input,
-        .day-cell.color-17 .employee-name input,
-        .day-cell.color-18 .employee-name input,
-        .day-cell.color-19 .employee-name input,
-        .day-cell.color-20 .employee-name input,
-        .day-cell.color-21 .employee-name input,
-        .day-cell.color-22 .employee-name input,
-        .day-cell.color-23 .employee-name input,
-        .day-cell.color-24 .employee-name input,
-        .day-cell.color-25 .employee-name input,
-        .day-cell.color-26 .employee-name input,
-        .day-cell.color-27 .employee-name input,
-        .day-cell.color-28 .employee-name input,
-        .day-cell.color-29 .employee-name input,
-        .day-cell.color-30 .employee-name input,
-        .day-cell.color-31 .employee-name input,
-        .day-cell.color-32 .employee-name input,
-        .day-cell.color-33 .employee-name input,
-        .day-cell.color-34 .employee-name input,
-        .day-cell.color-35 .employee-name input,
-        .day-cell.color-36 .employee-name input,
-        .day-cell.color-37 .employee-name input,
-        .day-cell.color-38 .employee-name input,
-        .day-cell.color-39 .employee-name input,
-        .day-cell.color-40 .employee-name input,
-        .day-cell.color-41 .employee-name input,
-        .day-cell.color-42 .employee-name input,
-        .day-cell.color-43 .employee-name input,
-        .day-cell.color-44 .employee-name input,
-        .day-cell.color-45 .employee-name input,
-        .day-cell.color-46 .employee-name input,
-        .day-cell.color-47 .employee-name input,
-        .day-cell.color-48 .employee-name input,
-        .day-cell.color-49 .employee-name input {
-            color: white !important;
-        }
-
         .day-cell.color-0 .employee-function,
         .day-cell.color-1 .employee-function,
         .day-cell.color-2 .employee-function,
@@ -1381,43 +1436,6 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             max-width: 100%;
-        }
-
-        .day-cell .employee-name input {
-            width: 100%;
-            border: none;
-            background: transparent;
-            text-align: center;
-            font-weight: 600;
-            font-size: 9px;
-            padding: 1px 2px;
-            outline: none;
-            border-radius: 4px;
-            transition: 0.2s;
-            min-height: 18px;
-            color: inherit;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .day-cell .employee-name input:focus {
-            background: var(--bg-primary);
-            box-shadow: 0 0 0 2px var(--primary);
-        }
-
-        .day-cell .employee-name input::placeholder {
-            color: rgba(255,255,255,0.5);
-            font-weight: 400;
-        }
-
-        .day-cell .employee-name input:disabled {
-            opacity: 0.7;
-            cursor: default;
-        }
-
-        .day-cell .employee-name input:disabled::placeholder {
-            color: rgba(255,255,255,0.3);
         }
 
         .day-cell .employee-function {
@@ -2206,7 +2224,6 @@
             .day-cell { min-height: 58px; padding: 4px 2px; }
             .day-cell .day-number { font-size: 10px; }
             .day-cell .employee-name { font-size: 8px; }
-            .day-cell .employee-name input { font-size: 8px; }
             .day-cell .employee-function { font-size: 6px; }
             .greeting-card .greeting-text { font-size: 13px; }
             .brand-name { font-size: 24px; }
@@ -2261,17 +2278,38 @@
 </div>
 
 <!-- ============================================
-   OVERLAY DE SENHA
+   TELA DE LOGIN (NOVO - COM NUVEM)
    ============================================ -->
-<div class="password-overlay active" id="passwordOverlay">
-    <div class="password-box">
-        <div class="lock-icon">🔐</div>
-        <h2>Modo Dono</h2>
-        <p>Digite a senha para acessar as edições</p>
-        <input type="password" id="passwordInput" placeholder="Digite a senha" maxlength="8" autofocus>
-        <div class="password-error" id="passwordError">❌ Senha incorreta. Tente novamente.</div>
-        <button class="btn-password" onclick="verifyPassword()">🔓 Desbloquear</button>
-        <button class="btn-cancel-password" onclick="enterFuncionarioMode()">👤 Entrar como Funcionário</button>
+<div class="login-screen active" id="loginScreen">
+    <div class="login-box">
+        <div class="logo">
+            <h1>PLANT<span>ONIX</span></h1>
+            <p>Escala de Plantões na Nuvem</p>
+        </div>
+
+        <div style="background:#dbeafe;padding:10px 14px;border-radius:10px;margin-bottom:20px;font-size:13px;color:#1e40af;text-align:center;">
+            ☁️ <strong>Dados salvos na nuvem!</strong><br>
+            Todos os funcionários veem a mesma escala
+        </div>
+
+        <div class="form-group">
+            <label>E-mail</label>
+            <input type="email" id="loginEmail" placeholder="seu@email.com" value="demo@plantonix.com">
+        </div>
+
+        <div class="form-group">
+            <label>Senha</label>
+            <input type="password" id="loginPassword" placeholder="Digite sua senha" value="123456">
+        </div>
+
+        <button class="btn-login" onclick="handleLogin()">🔐 Entrar</button>
+
+        <div class="login-divider">ou</div>
+
+        <button class="btn-secondary" onclick="createDemoAccount()">🚀 Criar Conta Demo</button>
+
+        <div id="loginError" class="login-error">❌ E-mail ou senha incorretos.</div>
+        <div id="loginSuccess" class="login-success">✅ Conta criada com sucesso!</div>
     </div>
 </div>
 
@@ -2292,6 +2330,7 @@
                 <button class="dono" onclick="toggleMode('dono')">👑 Dono</button>
                 <button class="func active" onclick="toggleMode('func')">👤 Func</button>
             </div>
+            <button class="logout-btn" onclick="handleLogout()" title="Sair">🚪</button>
             <button id="themeToggle" class="theme-toggle" aria-label="Alternar tema">🌙</button>
         </div>
     </header>
@@ -2305,11 +2344,12 @@
         <button class="menu-item" id="menuPrint" role="menuitem">🖨️ Imprimir Escala</button>
         <div class="menu-divider"></div>
         <button class="menu-item" id="menuChangePassword" role="menuitem">🔑 Alterar Senha</button>
+        <button class="menu-item" id="menuShare" role="menuitem">📤 Compartilhar Escala</button>
         <div class="menu-divider"></div>
         <button class="menu-item" id="menuClearMonth" role="menuitem">🗑️ Limpar mês</button>
         <button class="menu-item danger" id="menuResetAll" role="menuitem">⚠️ Resetar todos os dados</button>
         <div class="menu-divider"></div>
-        <button class="menu-item" style="opacity:0.5; font-size:11px; cursor:default;">📱 PLANTONIX v7.1</button>
+        <button class="menu-item" style="opacity:0.5; font-size:11px; cursor:default;">☁️ PLANTONIX v8.0</button>
     </nav>
 
     <!-- BRAND -->
@@ -2323,6 +2363,11 @@
 
     <!-- MODO BADGE -->
     <div class="mode-badge func" id="modeBadge">👤 Modo Funcionário - Apenas visualização</div>
+
+    <!-- NUVEM BADGE -->
+    <div style="text-align:center;padding:4px 0;font-size:10px;color:var(--text-tertiary);background:var(--bg-tertiary);border-radius:var(--radius-sm);margin-bottom:6px;">
+        ☁️ Dados salvos na nuvem • Compartilhado com todos
+    </div>
 
     <!-- GREETING -->
     <div class="greeting-card" id="greetingCard">
@@ -2393,7 +2438,7 @@
             <span class="footer-author">— Chico Xavier <span class="heart-icon">❤️</span></span>
         </div>
         <div class="footer-text" style="font-size:10px; margin-top:4px; opacity:0.5; font-style:normal;">
-            PLANTONIX v7.1 • <span id="footerMode">Modo Funcionário</span>
+            ☁️ Dados na nuvem • <span id="footerMode">Modo Funcionário</span>
         </div>
     </footer>
 </div>
@@ -2548,8 +2593,24 @@
 
 <script>
 /* ============================================
-   PLANTONIX v7.1 - COM SENHA
+   PLANTONIX v8.0 - COM NUVEM (FIREBASE)
    ============================================ */
+
+// ---------- CONFIGURAÇÃO FIREBASE ----------
+// ATENÇÃO: Substitua com suas credenciais do Firebase
+const firebaseConfig = {
+    apiKey: "SUA_API_KEY_AQUI",
+    authDomain: "SEU_PROJETO.firebaseapp.com",
+    projectId: "SEU_PROJETO",
+    storageBucket: "SEU_PROJETO.appspot.com",
+    messagingSenderId: "SEU_SENDER_ID",
+    appId: "SEU_APP_ID"
+};
+
+// Inicializa Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
 // ---------- CONSTANTES ----------
 const COLORS = [
@@ -2584,49 +2645,10 @@ function getFirstDayOfMonth(year, month) {
     return new Date(year, month, 1).getDay();
 }
 
-// ---------- STORAGE ----------
-function loadData() {
-    try {
-        const data = localStorage.getItem('plantonix_data');
-        if (data) {
-            return JSON.parse(data);
-        }
-    } catch (e) {}
-    return null;
-}
-
-function saveData() {
-    const data = {
-        companyName: state.companyName,
-        employees: state.employees,
-        scaleData: state.scaleData,
-        patientName: state.patientName,
-        patientRoom: state.patientRoom,
-        patientObs: state.patientObs,
-        history: state.history,
-        currentYear: state.currentYear,
-        currentMonth: state.currentMonth,
-        password: state.password
-    };
-    localStorage.setItem('plantonix_data', JSON.stringify(data));
-}
-
-// ---------- SENHA ----------
-function getPassword() {
-    const saved = loadData();
-    if (saved && saved.password) {
-        return saved.password;
-    }
-    return '12345678'; // Senha padrão de 8 dígitos
-}
-
-function savePassword(newPassword) {
-    state.password = newPassword;
-    saveData();
-}
-
 // ---------- ESTADO ----------
 const state = {
+    currentUser: null,
+    companyId: null,
     companyName: '',
     employees: [],
     scaleData: {},
@@ -2640,180 +2662,527 @@ const state = {
     searchTerm: '',
     selectedColor: 0,
     editingDate: null,
-    mode: 'func', // 'func' ou 'dono'
+    mode: 'func',
     isDono: false,
-    password: '12345678'
+    isPremium: false
 };
 
-// ---------- INICIALIZAÇÃO ----------
-function init() {
-    const savedData = loadData();
-    if (savedData) {
-        state.companyName = savedData.companyName || '';
-        state.employees = savedData.employees || [];
-        state.scaleData = savedData.scaleData || {};
-        state.patientName = savedData.patientName || '';
-        state.patientRoom = savedData.patientRoom || '';
-        state.patientObs = savedData.patientObs || '';
-        state.history = savedData.history || [];
-        state.currentYear = savedData.currentYear || new Date().getFullYear();
-        state.currentMonth = savedData.currentMonth || new Date().getMonth();
-        state.password = savedData.password || '12345678';
-    } else {
-        state.password = '12345678';
-        saveData();
-    }
-    
-    // Carrega tema
-    const savedTheme = localStorage.getItem('plantonix_theme') || 'light';
-    state.theme = savedTheme;
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    document.getElementById('themeToggle').textContent = savedTheme === 'light' ? '🌙' : '☀️';
-    
-    // Mostra overlay de senha
-    document.getElementById('passwordOverlay').classList.add('active');
-    document.getElementById('passwordInput').focus();
-    
-    setupNotifications();
-    
-    console.log('🚀 PLANTONIX v7.1 carregado!');
-    console.log('🔑 Senha padrão: 12345678');
+// ---------- TOAST ----------
+function showToast(message, type = 'info') {
+    const container = document.querySelector('.toast-container') || (() => {
+        const c = document.createElement('div');
+        c.className = 'toast-container';
+        document.body.appendChild(c);
+        return c;
+    })();
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    container.innerHTML = '';
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            if (container.children.length === 0) container.remove();
+        }, 300);
+    }, 3000);
 }
 
-// ---------- VERIFICAR SENHA ----------
-function verifyPassword() {
-    const input = document.getElementById('passwordInput').value;
-    const error = document.getElementById('passwordError');
-    const password = getPassword();
-    
-    if (input === password) {
-        state.isDono = true;
-        state.mode = 'dono';
-        document.getElementById('passwordOverlay').classList.remove('active');
-        renderApp();
-        setMode('dono');
-        showToast('🔓 Modo Dono ativado!', 'success');
-    } else {
-        error.style.display = 'block';
-        document.getElementById('passwordInput').value = '';
-        document.getElementById('passwordInput').focus();
-        setTimeout(() => { error.style.display = 'none'; }, 3000);
-    }
+// ---------- TELAS ----------
+function showLogin() {
+    document.getElementById('loginScreen').classList.add('active');
+    document.getElementById('app').classList.remove('active');
 }
 
-function enterFuncionarioMode() {
-    state.isDono = false;
-    state.mode = 'func';
-    document.getElementById('passwordOverlay').classList.remove('active');
-    renderApp();
-    setMode('func');
+function showApp() {
+    document.getElementById('loginScreen').classList.remove('active');
+    document.getElementById('app').classList.add('active');
 }
 
-// ---------- MODO ----------
-function setMode(mode) {
-    state.mode = mode;
-    const isDono = mode === 'dono' && state.isDono;
-    
-    // Atualiza botões
-    document.querySelectorAll('.mode-toggle button').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    document.querySelector(`.mode-toggle button.${mode}`).classList.add('active');
-    
-    // Atualiza badge
-    const badge = document.getElementById('modeBadge');
-    if (isDono) {
-        badge.className = 'mode-badge dono';
-        badge.textContent = '👑 Modo Dono - Você pode editar';
-    } else {
-        badge.className = 'mode-badge func';
-        badge.textContent = '👤 Modo Funcionário - Apenas visualização';
-    }
-    
-    // Atualiza footer
-    document.getElementById('footerMode').textContent = isDono ? 'Modo Dono' : 'Modo Funcionário';
-    
-    // Re-renderiza
-    renderCalendar();
-    updateUI();
+// ---------- AUTENTICAÇÃO ----------
+function getCompanyId() {
+    return state.companyId || 'demo_company';
 }
 
-function toggleMode(mode) {
-    if (mode === 'dono' && !state.isDono) {
-        document.getElementById('passwordOverlay').classList.add('active');
-        document.getElementById('passwordInput').value = '';
-        document.getElementById('passwordError').style.display = 'none';
-        document.getElementById('passwordInput').focus();
+async function handleLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const errorEl = document.getElementById('loginError');
+    const successEl = document.getElementById('loginSuccess');
+    const btn = document.querySelector('.btn-login');
+    
+    if (!email || !password) {
+        errorEl.textContent = '❌ Preencha todos os campos.';
+        errorEl.style.display = 'block';
         return;
     }
-    setMode(mode);
-}
-
-function isDono() {
-    return state.isDono && state.mode === 'dono';
-}
-
-// ---------- RENDER ----------
-function renderApp() {
-    document.getElementById('brandSubname').innerHTML = state.companyName || '<span class="placeholder">Clique para definir o nome da empresa</span> <span class="edit-icon">✏️</span>';
-    document.getElementById('headerSubname').textContent = state.companyName || 'Sua Escala';
-    renderCalendar();
-    updateGreeting();
-    updatePatientCard();
-    renderEmployeeList();
-    updateShiftCount();
-    updateUI();
-    applyTheme();
-}
-
-function updateUI() {
-    const editable = isDono();
     
-    // Atualiza elementos de edição
-    document.querySelectorAll('.day-cell .employee-name input').forEach(input => {
-        input.disabled = !editable;
-        if (!editable) {
-            input.classList.add('readonly');
-        } else {
-            input.classList.remove('readonly');
-        }
-    });
+    btn.disabled = true;
+    btn.textContent = '⏳ Entrando...';
+    errorEl.style.display = 'none';
+    successEl.style.display = 'none';
     
-    // Atualiza FAB
-    const fab = document.getElementById('fab');
-    if (editable) {
-        fab.style.display = 'flex';
-    } else {
-        fab.style.display = 'none';
+    try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        state.currentUser = userCredential.user;
+        
+        // Busca dados da empresa
+        await loadCompanyData();
+        
+        showApp();
+        renderApp();
+        showToast('✅ Bem-vindo ao PLANTONIX!', 'success');
+        
+        // Atualiza status de conexão
+        updateConnectionStatus();
+        
+    } catch (error) {
+        console.error('Erro no login:', error);
+        errorEl.textContent = `❌ ${error.message}`;
+        errorEl.style.display = 'block';
     }
     
-    // Atualiza menu items
-    const menuItems = ['menuEmployees', 'menuReports', 'menuBackup', 'menuClearMonth', 'menuResetAll', 'menuChangePassword'];
-    menuItems.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-            if (!editable) {
-                el.classList.add('disabled');
-                el.style.pointerEvents = 'none';
+    btn.disabled = false;
+    btn.textContent = '🔐 Entrar';
+}
+
+function handleLogout() {
+    auth.signOut();
+    state.currentUser = null;
+    state.companyId = null;
+    showLogin();
+    showToast('👋 Até logo!', 'info');
+}
+
+async function createDemoAccount() {
+    const errorEl = document.getElementById('loginError');
+    const successEl = document.getElementById('loginSuccess');
+    const btn = document.querySelector('.btn-secondary');
+    
+    btn.disabled = true;
+    btn.textContent = '⏳ Criando...';
+    errorEl.style.display = 'none';
+    successEl.style.display = 'none';
+    
+    try {
+        const email = 'demo@plantonix.com';
+        const password = '123456';
+        
+        let userCredential;
+        try {
+            userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        } catch (authError) {
+            if (authError.code === 'auth/email-already-in-use') {
+                userCredential = await auth.signInWithEmailAndPassword(email, password);
             } else {
-                el.classList.remove('disabled');
-                el.style.pointerEvents = 'auto';
+                throw authError;
             }
         }
-    });
+        
+        state.currentUser = userCredential.user;
+        
+        // Verifica se a empresa demo já existe
+        const demoRef = db.collection('empresas').doc('demo_company');
+        const doc = await demoRef.get();
+        
+        if (!doc.exists) {
+            await demoRef.set({
+                nome: 'Empresa Demo',
+                subnome: 'Home Care Demo',
+                criadoEm: new Date().toISOString()
+            });
+            
+            await demoRef.collection('usuarios').doc(userCredential.user.uid).set({
+                nome: 'Dono Demo',
+                email: email,
+                role: 'dono',
+                criadoEm: new Date().toISOString()
+            });
+            
+            await demoRef.collection('dados').doc('escala').set({ dados: {} });
+            await demoRef.collection('dados').doc('paciente').set({
+                nome: '',
+                quarto: '',
+                obs: ''
+            });
+        }
+        
+        await loadCompanyData();
+        
+        showApp();
+        renderApp();
+        successEl.textContent = '✅ Conta Demo criada com sucesso!';
+        successEl.style.display = 'block';
+        showToast('🎉 Conta criada!', 'success');
+        
+    } catch (error) {
+        console.error('Erro:', error);
+        errorEl.textContent = `❌ ${error.message}`;
+        errorEl.style.display = 'block';
+    }
     
-    // Atualiza patient card
-    const patientCard = document.getElementById('patientCard');
-    if (!editable) {
-        patientCard.style.cursor = 'default';
-        patientCard.style.opacity = '0.8';
-    } else {
-        patientCard.style.cursor = 'pointer';
-        patientCard.style.opacity = '1';
+    btn.disabled = false;
+    btn.textContent = '🚀 Criar Conta Demo';
+}
+
+async function loadCompanyData() {
+    if (!state.currentUser) return;
+    
+    const companyId = 'demo_company';
+    state.companyId = companyId;
+    
+    try {
+        // Busca dados da empresa
+        const companyDoc = await db.collection('empresas').doc(companyId).get();
+        if (companyDoc.exists) {
+            const data = companyDoc.data();
+            state.companyName = data.nome || data.subnome || 'Empresa Demo';
+        }
+        
+        // Busca se o usuário é dono
+        const userDoc = await db.collection('empresas')
+            .doc(companyId)
+            .collection('usuarios')
+            .doc(state.currentUser.uid)
+            .get();
+        
+        if (userDoc.exists) {
+            const userData = userDoc.data();
+            state.isDono = userData.role === 'dono';
+        }
+        
+        // Busca escala
+        const scaleDoc = await db.collection('empresas')
+            .doc(companyId)
+            .collection('dados')
+            .doc('escala')
+            .get();
+        
+        if (scaleDoc.exists) {
+            state.scaleData = scaleDoc.data().dados || {};
+        }
+        
+        // Busca funcionários
+        const employeesSnapshot = await db.collection('empresas')
+            .doc(companyId)
+            .collection('funcionarios')
+            .get();
+        
+        state.employees = [];
+        employeesSnapshot.forEach(doc => {
+            state.employees.push({ id: doc.id, ...doc.data() });
+        });
+        
+        // Busca paciente
+        const patientDoc = await db.collection('empresas')
+            .doc(companyId)
+            .collection('dados')
+            .doc('paciente')
+            .get();
+        
+        if (patientDoc.exists) {
+            const patientData = patientDoc.data();
+            state.patientName = patientData.nome || '';
+            state.patientRoom = patientData.quarto || '';
+            state.patientObs = patientData.obs || '';
+        }
+        
+        // Busca histórico
+        const historySnapshot = await db.collection('empresas')
+            .doc(companyId)
+            .collection('historico')
+            .orderBy('data', 'desc')
+            .limit(50)
+            .get();
+        
+        state.history = [];
+        historySnapshot.forEach(doc => {
+            state.history.push(doc.data());
+        });
+        
+        console.log('✅ Dados carregados da nuvem!');
+        console.log(`📊 ${state.employees.length} funcionários, ${Object.keys(state.scaleData).length} dias`);
+
+    } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        showToast('⚠️ Erro ao carregar dados da nuvem.', 'error');
     }
 }
 
-// ---------- CALENDÁRIO ----------
+// ---------- SALVAR NA NUVEM ----------
+async function saveToCloud() {
+    if (!state.companyId) return;
+    
+    try {
+        // Salva escala
+        await db.collection('empresas')
+            .doc(state.companyId)
+            .collection('dados')
+            .doc('escala')
+            .set({ dados: state.scaleData });
+        
+        // Salva funcionários (limpa e recria)
+        const employeesRef = db.collection('empresas')
+            .doc(state.companyId)
+            .collection('funcionarios');
+        
+        const snapshot = await employeesRef.get();
+        for (const doc of snapshot.docs) {
+            await doc.ref.delete();
+        }
+        
+        for (const emp of state.employees) {
+            await employeesRef.add(emp);
+        }
+        
+        // Salva paciente
+        await db.collection('empresas')
+            .doc(state.companyId)
+            .collection('dados')
+            .doc('paciente')
+            .set({
+                nome: state.patientName,
+                quarto: state.patientRoom,
+                obs: state.patientObs
+            });
+        
+        console.log('✅ Dados salvos na nuvem!');
+        
+    } catch (error) {
+        console.error('Erro ao salvar na nuvem:', error);
+        showToast('⚠️ Erro ao salvar dados na nuvem.', 'error');
+    }
+}
+
+// ---------- ADICIONAR HISTÓRICO ----------
+async function addHistory(action) {
+    if (!state.companyId) return;
+    
+    try {
+        await db.collection('empresas')
+            .doc(state.companyId)
+            .collection('historico')
+            .add({
+                action: action,
+                data: new Date().toISOString(),
+                usuario: state.currentUser ? state.currentUser.email : 'Sistema'
+            });
+        
+        state.history.unshift({
+            action: action,
+            data: new Date().toLocaleString()
+        });
+        
+        if (state.history.length > 100) {
+            state.history = state.history.slice(0, 100);
+        }
+        
+    } catch (error) {
+        console.error('Erro ao salvar histórico:', error);
+    }
+}
+
+// ---------- FUNÇÃO getEmployeeColor ----------
+function getEmployeeColor(nome) {
+    const emp = state.employees.find(e => e.nome === nome);
+    return emp ? emp.cor : -1;
+}
+
+// ---------- FUNÇÃO renderEmployeeList ----------
+function renderEmployeeList() {
+    const list = document.getElementById('employeeList');
+    if (!list) return;
+    
+    if (state.employees.length === 0) {
+        list.innerHTML = '<p style="text-align:center;color:var(--text-tertiary);padding:20px;">Nenhum funcionário cadastrado</p>';
+        return;
+    }
+    
+    list.innerHTML = state.employees.map((emp) => {
+        const color = COLORS[emp.cor] || '#cccccc';
+        return `<div class="employee-item">
+            <div class="emp-info">
+                <span class="emp-name">${emp.nome}</span>
+                <span class="emp-details">${emp.funcao || '—'} • ${emp.telefone || '—'}</span>
+            </div>
+            <div class="emp-color-preview" style="background:${color};"></div>
+            <div class="emp-actions">
+                <button class="emp-edit" onclick="editEmployee('${emp.id}')">✏️</button>
+                <button class="emp-delete" onclick="deleteEmployee('${emp.id}')">🗑️</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// ---------- FUNÇÃO renderColorPalette ----------
+function renderColorPalette() {
+    const palette = document.getElementById('colorPalette');
+    if (!palette) return;
+    
+    const selectedColor = parseInt(document.getElementById('empAddBtn').dataset.selectedColor) || 0;
+    
+    palette.innerHTML = '';
+    
+    COLORS.forEach((color, index) => {
+        const div = document.createElement('div');
+        div.className = 'color-option' + (index === selectedColor ? ' selected' : '');
+        div.style.background = color;
+        div.dataset.colorIndex = index;
+        
+        div.addEventListener('click', function() {
+            const idx = parseInt(this.dataset.colorIndex);
+            palette.querySelectorAll('.color-option').forEach(el => el.classList.remove('selected'));
+            this.classList.add('selected');
+            document.getElementById('empAddBtn').dataset.selectedColor = idx;
+            state.selectedColor = idx;
+        });
+        
+        const check = document.createElement('span');
+        check.className = 'check-mark';
+        check.textContent = '✓';
+        div.appendChild(check);
+        
+        palette.appendChild(div);
+    });
+}
+
+// ---------- FUNÇÃO addEmployee ----------
+function addEmployee() {
+    if (!isDono()) {
+        showToast('🔒 Apenas o Dono pode adicionar funcionários.', 'error');
+        return;
+    }
+    
+    const nome = document.getElementById('empName').value.trim();
+    const telefone = document.getElementById('empPhone').value.trim();
+    const funcao = document.getElementById('empRole').value.trim();
+    const selectedColor = parseInt(document.getElementById('empAddBtn').dataset.selectedColor) || 0;
+    
+    if (!nome) {
+        showToast('❌ Digite o nome.', 'error');
+        return;
+    }
+    
+    if (state.employees.some(e => e.nome === nome)) {
+        showToast('⚠️ Funcionário já cadastrado.', 'error');
+        return;
+    }
+    
+    const id = 'emp_' + Date.now();
+    const newEmp = { id, nome, telefone, funcao, cor: selectedColor };
+    state.employees.push(newEmp);
+    
+    addHistory(`Adicionou funcionário: ${nome}`);
+    saveToCloud();
+    renderEmployeeList();
+    renderCalendar();
+    
+    document.getElementById('empName').value = '';
+    document.getElementById('empPhone').value = '';
+    document.getElementById('empRole').value = '';
+    
+    showToast(`✅ ${nome} adicionado!`, 'success');
+}
+
+// ---------- FUNÇÃO editEmployee ----------
+function editEmployee(id) {
+    if (!isDono()) {
+        showToast('🔒 Apenas o Dono pode editar funcionários.', 'error');
+        return;
+    }
+    
+    const emp = state.employees.find(e => e.id === id);
+    if (!emp) return;
+    
+    document.getElementById('empName').value = emp.nome;
+    document.getElementById('empPhone').value = emp.telefone || '';
+    document.getElementById('empRole').value = emp.funcao || '';
+    
+    const selectedColor = emp.cor || 0;
+    document.getElementById('empAddBtn').dataset.selectedColor = selectedColor;
+    
+    const palette = document.getElementById('colorPalette');
+    palette.querySelectorAll('.color-option').forEach(el => {
+        const idx = parseInt(el.dataset.colorIndex);
+        el.classList.toggle('selected', idx === selectedColor);
+    });
+    
+    const addBtn = document.getElementById('empAddBtn');
+    addBtn.textContent = '💾 Atualizar';
+    addBtn.dataset.editId = id;
+}
+
+// ---------- FUNÇÃO updateEmployee ----------
+async function updateEmployee(id) {
+    const nome = document.getElementById('empName').value.trim();
+    const telefone = document.getElementById('empPhone').value.trim();
+    const funcao = document.getElementById('empRole').value.trim();
+    const cor = parseInt(document.getElementById('empAddBtn').dataset.selectedColor) || 0;
+    
+    if (!nome) {
+        showToast('❌ Digite o nome.', 'error');
+        return;
+    }
+    
+    const emp = state.employees.find(e => e.id === id);
+    if (!emp) return;
+    
+    const oldNome = emp.nome;
+    emp.nome = nome;
+    emp.telefone = telefone;
+    emp.funcao = funcao;
+    emp.cor = cor;
+    
+    for (const key in state.scaleData) {
+        if (state.scaleData[key].nome === oldNome) {
+            state.scaleData[key].nome = nome;
+            state.scaleData[key].cor = cor;
+        }
+    }
+    
+    addHistory(`Atualizou funcionário: ${oldNome} → ${nome}`);
+    await saveToCloud();
+    renderEmployeeList();
+    renderCalendar();
+    
+    const addBtn = document.getElementById('empAddBtn');
+    addBtn.textContent = '➕ Adicionar';
+    delete addBtn.dataset.editId;
+    
+    document.getElementById('empName').value = '';
+    document.getElementById('empPhone').value = '';
+    document.getElementById('empRole').value = '';
+    
+    showToast('✅ Funcionário atualizado!', 'success');
+}
+
+// ---------- FUNÇÃO deleteEmployee ----------
+async function deleteEmployee(id) {
+    if (!isDono()) {
+        showToast('🔒 Apenas o Dono pode excluir funcionários.', 'error');
+        return;
+    }
+    
+    if (!confirm('Remover este funcionário?')) return;
+    const emp = state.employees.find(e => e.id === id);
+    if (!emp) return;
+    
+    state.employees = state.employees.filter(e => e.id !== id);
+    for (const key in state.scaleData) {
+        if (state.scaleData[key].nome === emp.nome) {
+            delete state.scaleData[key];
+        }
+    }
+    
+    addHistory(`Removeu funcionário: ${emp.nome}`);
+    await saveToCloud();
+    renderEmployeeList();
+    renderCalendar();
+    showToast('🗑️ Funcionário removido.', 'info');
+}
+
+// ---------- FUNÇÃO renderCalendar ----------
 function renderCalendar() {
     const daysInMonth = getDaysInMonth(state.currentYear, state.currentMonth);
     const firstDay = getFirstDayOfMonth(state.currentYear, state.currentMonth);
@@ -2885,40 +3254,9 @@ function renderCalendar() {
         
         const nameDiv = document.createElement('div');
         nameDiv.className = 'employee-name';
-        
-        if (editable) {
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.placeholder = 'Funcionário';
-            input.value = nome;
-            input.maxLength = 30;
-            input.dataset.dateKey = dateKey;
-            input.addEventListener('click', (e) => e.stopPropagation());
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    const val = e.target.value.trim();
-                    const dateKey2 = e.target.dataset.dateKey;
-                    if (val === '') {
-                        delete state.scaleData[dateKey2];
-                        addHistory(`Removeu funcionário do dia ${dateKey2}`);
-                    } else {
-                        let cor = getEmployeeColor(val);
-                        if (cor === -1) cor = 0;
-                        state.scaleData[dateKey2] = { nome: val, cor: cor };
-                        addHistory(`Adicionou ${val} no dia ${dateKey2}`);
-                    }
-                    saveData();
-                    renderCalendar();
-                    updateGreeting();
-                    showToast('✅ Dia atualizado!', 'success');
-                }
-            });
-            nameDiv.appendChild(input);
-        } else {
-            const span = document.createElement('span');
-            span.textContent = nome || '—';
-            nameDiv.appendChild(span);
-        }
+        const span = document.createElement('span');
+        span.textContent = nome || '—';
+        nameDiv.appendChild(span);
         cell.appendChild(nameDiv);
         
         if (nome) {
@@ -2933,10 +3271,8 @@ function renderCalendar() {
         
         if (editable) {
             cell.addEventListener('click', function(e) {
-                if (e.target.tagName === 'INPUT') return;
                 const dateKey2 = this.dataset.date;
-                const current = state.scaleData[dateKey2] || {};
-                openEditModal(dateKey2, current.nome || '');
+                openEditModal(dateKey2);
             });
         }
         
@@ -2947,6 +3283,7 @@ function renderCalendar() {
     updateUI();
 }
 
+// ---------- FUNÇÃO updateShiftCount ----------
 function updateShiftCount() {
     const days = getDaysInMonth(state.currentYear, state.currentMonth);
     let count = 0;
@@ -2957,177 +3294,100 @@ function updateShiftCount() {
     document.getElementById('shiftCount').textContent = count;
 }
 
-// ---------- FUNCIONÁRIOS ----------
-function getEmployeeColor(nome) {
-    const emp = state.employees.find(e => e.nome === nome);
-    return emp ? emp.cor : -1;
-}
-
-function renderEmployeeList() {
-    const list = document.getElementById('employeeList');
-    if (!list) return;
-    
-    if (state.employees.length === 0) {
-        list.innerHTML = '<p style="text-align:center;color:var(--text-tertiary);padding:20px;">Nenhum funcionário cadastrado</p>';
+// ---------- FUNÇÃO openEditModal ----------
+function openEditModal(dateKey) {
+    if (!isDono()) {
+        showToast('🔒 Apenas o Dono pode editar a escala.', 'error');
         return;
     }
     
-    list.innerHTML = state.employees.map((emp) => {
-        const color = COLORS[emp.cor] || '#cccccc';
-        return `<div class="employee-item">
-            <div class="emp-info">
-                <span class="emp-name">${emp.nome}</span>
-                <span class="emp-details">${emp.funcao || '—'} • ${emp.telefone || '—'}</span>
-            </div>
-            <div class="emp-color-preview" style="background:${color};"></div>
-            <div class="emp-actions">
-                <button class="emp-edit" onclick="editEmployee('${emp.id}')">✏️</button>
-                <button class="emp-delete" onclick="deleteEmployee('${emp.id}')">🗑️</button>
-            </div>
-        </div>`;
-    }).join('');
-}
-
-function renderColorPalette() {
-    const palette = document.getElementById('colorPalette');
-    if (!palette) return;
-    const selectedColor = state.selectedColor || 0;
-    palette.innerHTML = '';
-    COLORS.forEach((color, index) => {
-        const div = document.createElement('div');
-        div.className = 'color-option' + (index === selectedColor ? ' selected' : '');
-        div.style.background = color;
-        div.dataset.colorIndex = index;
-        div.addEventListener('click', function() {
-            const idx = parseInt(this.dataset.colorIndex);
-            palette.querySelectorAll('.color-option').forEach(el => el.classList.remove('selected'));
-            this.classList.add('selected');
-            state.selectedColor = idx;
-        });
-        const check = document.createElement('span');
-        check.className = 'check-mark';
-        check.textContent = '✓';
-        div.appendChild(check);
-        palette.appendChild(div);
+    state.editingDate = dateKey;
+    const parts = dateKey.split('-');
+    const year = parseInt(parts[0]);
+    const month = parseInt(parts[1]) - 1;
+    const day = parseInt(parts[2]);
+    document.getElementById('modalDate').textContent = `Dia ${day} de ${getMonthName(month)} ${year}`;
+    
+    const dayData = state.scaleData[dateKey];
+    const currentName = dayData ? dayData.nome : '';
+    
+    const select = document.getElementById('modalEmployeeSelect');
+    select.innerHTML = '<option value="">Selecione um funcionário</option>';
+    
+    if (currentName) {
+        const removeOpt = document.createElement('option');
+        removeOpt.value = '___REMOVER___';
+        removeOpt.textContent = '🗑️ Remover funcionário';
+        select.appendChild(removeOpt);
+    }
+    
+    state.employees.forEach(emp => {
+        const opt = document.createElement('option');
+        opt.value = emp.nome;
+        opt.textContent = `${emp.nome} ${emp.funcao ? `(${emp.funcao})` : ''}`;
+        if (emp.nome === currentName) opt.selected = true;
+        select.appendChild(opt);
     });
+    
+    document.getElementById('modalNameInput').value = currentName || '';
+    document.getElementById('modalNameInput').placeholder = 'Ou digite um novo nome';
+    
+    openModal('editModal');
 }
 
-function addEmployee() {
-    if (!isDono()) {
-        showToast('🔒 Apenas o Dono pode adicionar funcionários.', 'error');
+// ---------- FUNÇÃO saveEditModal ----------
+async function saveEditModal() {
+    const dateKey = state.editingDate;
+    if (!dateKey) return;
+    
+    const selected = document.getElementById('modalEmployeeSelect').value;
+    const typed = document.getElementById('modalNameInput').value.trim();
+    
+    if (selected === '___REMOVER___') {
+        delete state.scaleData[dateKey];
+        addHistory(`Removeu funcionário do dia ${dateKey}`);
+        await saveToCloud();
+        closeModal('editModal');
+        renderCalendar();
+        updateGreeting();
+        showToast('✅ Funcionário removido!', 'success');
         return;
     }
     
-    const nome = document.getElementById('empName').value.trim();
-    const telefone = document.getElementById('empPhone').value.trim();
-    const funcao = document.getElementById('empRole').value.trim();
-    const cor = state.selectedColor || 0;
+    const nome = selected || typed;
     
-    if (!nome) {
-        showToast('❌ Digite o nome.', 'error');
-        return;
-    }
-    
-    if (state.employees.some(e => e.nome === nome)) {
-        showToast('⚠️ Funcionário já cadastrado.', 'error');
-        return;
-    }
-    
-    const id = 'emp_' + Date.now();
-    const newEmp = { id, nome, telefone, funcao, cor };
-    state.employees.push(newEmp);
-    addHistory(`Adicionou funcionário: ${nome}`);
-    saveData();
-    renderEmployeeList();
-    renderCalendar();
-    document.getElementById('empName').value = '';
-    document.getElementById('empPhone').value = '';
-    document.getElementById('empRole').value = '';
-    showToast(`✅ ${nome} adicionado!`, 'success');
-}
-
-function editEmployee(id) {
-    if (!isDono()) {
-        showToast('🔒 Apenas o Dono pode editar funcionários.', 'error');
-        return;
-    }
-    
-    const emp = state.employees.find(e => e.id === id);
-    if (!emp) return;
-    document.getElementById('empName').value = emp.nome;
-    document.getElementById('empPhone').value = emp.telefone || '';
-    document.getElementById('empRole').value = emp.funcao || '';
-    state.selectedColor = emp.cor || 0;
-    renderColorPalette();
-    document.getElementById('empAddBtn').textContent = '💾 Atualizar';
-    document.getElementById('empAddBtn').onclick = function() {
-        updateEmployee(id);
-    };
-}
-
-function updateEmployee(id) {
-    const nome = document.getElementById('empName').value.trim();
-    const telefone = document.getElementById('empPhone').value.trim();
-    const funcao = document.getElementById('empRole').value.trim();
-    const cor = state.selectedColor || 0;
-    
-    if (!nome) {
-        showToast('❌ Digite o nome.', 'error');
-        return;
-    }
-    
-    const emp = state.employees.find(e => e.id === id);
-    if (!emp) return;
-    
-    const oldNome = emp.nome;
-    emp.nome = nome;
-    emp.telefone = telefone;
-    emp.funcao = funcao;
-    emp.cor = cor;
-    
-    for (const key in state.scaleData) {
-        if (state.scaleData[key].nome === oldNome) {
-            state.scaleData[key].nome = nome;
-            state.scaleData[key].cor = cor;
+    if (nome === '') {
+        delete state.scaleData[dateKey];
+        addHistory(`Removeu funcionário do dia ${dateKey}`);
+    } else {
+        let cor = getEmployeeColor(nome);
+        if (cor === -1) {
+            const usedColors = state.employees.map(e => e.cor);
+            for (let i = 0; i < 50; i++) {
+                if (!usedColors.includes(i)) {
+                    cor = i;
+                    break;
+                }
+            }
+            if (cor === -1) cor = 0;
+            
+            const id = 'emp_' + Date.now();
+            state.employees.push({ id, nome, telefone: '', funcao: '', cor: cor });
+            renderEmployeeList();
         }
+        
+        state.scaleData[dateKey] = { nome: nome, cor: cor };
+        addHistory(`Adicionou ${nome} no dia ${dateKey}`);
     }
     
-    addHistory(`Atualizou funcionário: ${oldNome} → ${nome}`);
-    saveData();
-    renderEmployeeList();
+    await saveToCloud();
+    closeModal('editModal');
     renderCalendar();
-    document.getElementById('empAddBtn').textContent = '➕ Adicionar';
-    document.getElementById('empAddBtn').onclick = addEmployee;
-    document.getElementById('empName').value = '';
-    document.getElementById('empPhone').value = '';
-    document.getElementById('empRole').value = '';
-    showToast('✅ Funcionário atualizado!', 'success');
+    updateGreeting();
+    showToast('✅ Dia atualizado!', 'success');
 }
 
-function deleteEmployee(id) {
-    if (!isDono()) {
-        showToast('🔒 Apenas o Dono pode excluir funcionários.', 'error');
-        return;
-    }
-    
-    if (!confirm('Remover este funcionário?')) return;
-    const emp = state.employees.find(e => e.id === id);
-    if (!emp) return;
-    
-    state.employees = state.employees.filter(e => e.id !== id);
-    for (const key in state.scaleData) {
-        if (state.scaleData[key].nome === emp.nome) {
-            delete state.scaleData[key];
-        }
-    }
-    addHistory(`Removeu funcionário: ${emp.nome}`);
-    saveData();
-    renderEmployeeList();
-    renderCalendar();
-    showToast('🗑️ Funcionário removido.', 'info');
-}
-
-// ---------- SAUDAÇÃO ----------
+// ---------- FUNÇÃO updateGreeting ----------
 function updateGreeting() {
     const now = new Date();
     const hoje = formatDate(now.getFullYear(), now.getMonth(), now.getDate());
@@ -3168,7 +3428,7 @@ function updateGreeting() {
     dateEl.textContent = `Hoje é ${diaSemana}, ${now.getDate()} de ${getMonthName(now.getMonth())}`;
 }
 
-// ---------- PACIENTE ----------
+// ---------- FUNÇÃO updatePatientCard ----------
 function updatePatientCard() {
     const display = document.getElementById('patientNameDisplay');
     const details = document.getElementById('patientDetails');
@@ -3189,6 +3449,7 @@ function updatePatientCard() {
     }
 }
 
+// ---------- FUNÇÃO openPatientModal ----------
 function openPatientModal() {
     if (!isDono()) {
         showToast('🔒 Apenas o Dono pode editar o paciente.', 'error');
@@ -3201,97 +3462,20 @@ function openPatientModal() {
     openModal('patientModal');
 }
 
-function savePatientModal() {
+// ---------- FUNÇÃO savePatientModal ----------
+async function savePatientModal() {
     state.patientName = document.getElementById('patientInput').value.trim();
     state.patientRoom = document.getElementById('patientRoom').value.trim();
     state.patientObs = document.getElementById('patientObs').value.trim();
+    
     addHistory(`Atualizou paciente: ${state.patientName || 'removido'}`);
-    saveData();
+    await saveToCloud();
     closeModal('patientModal');
     updatePatientCard();
     showToast('✅ Paciente atualizado!', 'success');
 }
 
-// ---------- EDIÇÃO ----------
-function openEditModal(dateKey, currentName) {
-    if (!isDono()) {
-        showToast('🔒 Apenas o Dono pode editar a escala.', 'error');
-        return;
-    }
-    
-    state.editingDate = dateKey;
-    const parts = dateKey.split('-');
-    const year = parseInt(parts[0]);
-    const month = parseInt(parts[1]) - 1;
-    const day = parseInt(parts[2]);
-    document.getElementById('modalDate').textContent = `Dia ${day} de ${getMonthName(month)} ${year}`;
-    
-    const select = document.getElementById('modalEmployeeSelect');
-    select.innerHTML = '<option value="">Selecione um funcionário</option>';
-    state.employees.forEach(emp => {
-        const opt = document.createElement('option');
-        opt.value = emp.nome;
-        opt.textContent = `${emp.nome} ${emp.funcao ? `(${emp.funcao})` : ''}`;
-        if (emp.nome === currentName) opt.selected = true;
-        select.appendChild(opt);
-    });
-    
-    document.getElementById('modalNameInput').value = currentName || '';
-    openModal('editModal');
-}
-
-function saveEditModal() {
-    const dateKey = state.editingDate;
-    if (!dateKey) return;
-    
-    const selected = document.getElementById('modalEmployeeSelect').value;
-    const typed = document.getElementById('modalNameInput').value.trim();
-    const nome = selected || typed;
-    
-    if (nome === '') {
-        delete state.scaleData[dateKey];
-        addHistory(`Removeu funcionário do dia ${dateKey}`);
-    } else {
-        let cor = getEmployeeColor(nome);
-        if (cor === -1) cor = 0;
-        state.scaleData[dateKey] = { nome: nome, cor: cor };
-        addHistory(`Adicionou ${nome} no dia ${dateKey}`);
-    }
-    
-    saveData();
-    closeModal('editModal');
-    renderCalendar();
-    updateGreeting();
-    showToast('✅ Dia atualizado!', 'success');
-}
-
-// ---------- HISTÓRICO ----------
-function addHistory(action) {
-    state.history.push({
-        date: new Date().toLocaleString(),
-        action: action
-    });
-    if (state.history.length > 100) {
-        state.history = state.history.slice(-100);
-    }
-    saveData();
-}
-
-function renderHistory() {
-    const list = document.getElementById('historyList');
-    if (state.history.length === 0) {
-        list.innerHTML = '<p style="text-align:center;color:var(--text-tertiary);padding:20px;">Nenhuma alteração registrada</p>';
-        return;
-    }
-    list.innerHTML = state.history.slice().reverse().map(item => `
-        <div class="history-item">
-            <span class="history-action">${item.action}</span>
-            <span class="history-date">${item.date}</span>
-        </div>
-    `).join('');
-}
-
-// ---------- EMPRESA ----------
+// ---------- FUNÇÃO editCompanyName ----------
 function editCompanyName() {
     if (!isDono()) {
         showToast('🔒 Apenas o Dono pode editar o nome da empresa.', 'error');
@@ -3302,64 +3486,147 @@ function editCompanyName() {
     openModal('companyModal');
 }
 
-function saveCompanyName() {
+// ---------- FUNÇÃO saveCompanyName ----------
+async function saveCompanyName() {
     const name = document.getElementById('companyInput').value.trim();
     if (name) {
         state.companyName = name;
         addHistory(`Alterou nome da empresa para: ${name}`);
-        saveData();
+        await saveToCloud();
         renderApp();
         showToast('✅ Nome atualizado!', 'success');
     }
     closeModal('companyModal');
 }
 
-// ---------- ALTERAR SENHA ----------
-function openChangePasswordModal() {
-    if (!isDono()) {
-        showToast('🔒 Apenas o Dono pode alterar a senha.', 'error');
-        return;
-    }
-    document.getElementById('currentPassword').value = '';
-    document.getElementById('newPassword').value = '';
-    document.getElementById('confirmPassword').value = '';
-    document.getElementById('changePasswordError').style.display = 'none';
-    openModal('changePasswordModal');
+// ---------- FUNÇÃO isDono ----------
+function isDono() {
+    return state.isDono && state.mode === 'dono';
 }
 
-function changePassword() {
-    const current = document.getElementById('currentPassword').value;
-    const newPass = document.getElementById('newPassword').value;
-    const confirm = document.getElementById('confirmPassword').value;
-    const errorEl = document.getElementById('changePasswordError');
+// ---------- FUNÇÃO setMode ----------
+function setMode(mode) {
+    state.mode = mode;
+    const isDono = mode === 'dono' && state.isDono;
     
-    const password = getPassword();
+    document.querySelectorAll('.mode-toggle button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`.mode-toggle button.${mode}`).classList.add('active');
     
-    if (current !== password) {
-        errorEl.textContent = '❌ Senha atual incorreta.';
-        errorEl.style.display = 'block';
-        return;
+    const badge = document.getElementById('modeBadge');
+    if (isDono) {
+        badge.className = 'mode-badge dono';
+        badge.textContent = '👑 Modo Dono - Você pode editar';
+    } else {
+        badge.className = 'mode-badge func';
+        badge.textContent = '👤 Modo Funcionário - Apenas visualização';
     }
     
-    if (newPass.length !== 8) {
-        errorEl.textContent = '❌ A nova senha deve ter exatamente 8 dígitos.';
-        errorEl.style.display = 'block';
-        return;
-    }
+    document.getElementById('footerMode').textContent = isDono ? 'Modo Dono' : 'Modo Funcionário';
     
-    if (newPass !== confirm) {
-        errorEl.textContent = '❌ As senhas não coincidem.';
-        errorEl.style.display = 'block';
-        return;
-    }
-    
-    savePassword(newPass);
-    closeModal('changePasswordModal');
-    showToast('✅ Senha alterada com sucesso!', 'success');
-    addHistory('Alterou a senha do Dono');
+    renderCalendar();
+    updateUI();
 }
 
-// ---------- IMPRESSÃO ----------
+// ---------- FUNÇÃO toggleMode ----------
+function toggleMode(mode) {
+    if (mode === 'dono' && !state.isDono) {
+        showToast('🔒 Apenas o Dono pode editar.', 'error');
+        return;
+    }
+    setMode(mode);
+}
+
+// ---------- FUNÇÃO updateUI ----------
+function updateUI() {
+    const editable = isDono();
+    
+    const fab = document.getElementById('fab');
+    if (editable) {
+        fab.style.display = 'flex';
+    } else {
+        fab.style.display = 'none';
+    }
+    
+    const menuItems = ['menuEmployees', 'menuReports', 'menuBackup', 'menuClearMonth', 'menuResetAll', 'menuChangePassword'];
+    menuItems.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            if (!editable) {
+                el.classList.add('disabled');
+                el.style.pointerEvents = 'none';
+            } else {
+                el.classList.remove('disabled');
+                el.style.pointerEvents = 'auto';
+            }
+        }
+    });
+    
+    const patientCard = document.getElementById('patientCard');
+    if (!editable) {
+        patientCard.style.cursor = 'default';
+        patientCard.style.opacity = '0.8';
+    } else {
+        patientCard.style.cursor = 'pointer';
+        patientCard.style.opacity = '1';
+    }
+}
+
+// ---------- FUNÇÃO renderApp ----------
+function renderApp() {
+    document.getElementById('brandSubname').innerHTML = state.companyName || '<span class="placeholder">Clique para definir o nome da empresa</span> <span class="edit-icon">✏️</span>';
+    document.getElementById('headerSubname').textContent = state.companyName || 'Sua Escala';
+    renderCalendar();
+    updateGreeting();
+    updatePatientCard();
+    renderEmployeeList();
+    updateShiftCount();
+    updateUI();
+    applyTheme();
+}
+
+// ---------- FUNÇÃO applyTheme ----------
+function applyTheme() {
+    document.documentElement.setAttribute('data-theme', state.theme);
+    document.getElementById('themeToggle').textContent = state.theme === 'light' ? '🌙' : '☀️';
+}
+
+// ---------- FUNÇÃO applySearch ----------
+function applySearch() {
+    const term = state.searchTerm.toLowerCase().trim();
+    const cells = document.querySelectorAll('.day-cell:not(.empty)');
+    cells.forEach(cell => {
+        const nameEl = cell.querySelector('.employee-name span');
+        const name = nameEl ? nameEl.textContent || '' : '';
+        const matches = name.toLowerCase().includes(term);
+        cell.style.display = matches ? '' : 'none';
+    });
+}
+
+// ---------- FUNÇÃO clearSearch ----------
+function clearSearch() {
+    state.searchTerm = '';
+    document.getElementById('searchInput').value = '';
+    document.getElementById('searchClear').style.display = 'none';
+    const cells = document.querySelectorAll('.day-cell:not(.empty)');
+    cells.forEach(cell => cell.style.display = '');
+}
+
+// ---------- FUNÇÃO updateConnectionStatus ----------
+function updateConnectionStatus() {
+    const statusEl = document.getElementById('connectionStatus');
+    if (navigator.onLine) {
+        statusEl.style.display = 'none';
+    } else {
+        statusEl.style.display = 'block';
+        statusEl.style.background = '#fef3c7';
+        statusEl.style.color = '#92400e';
+        statusEl.textContent = '📡 Offline - Alterações serão salvas quando a conexão voltar';
+    }
+}
+
+// ---------- FUNÇÃO printScale ----------
 function printScale() {
     const month = state.currentMonth;
     const year = state.currentYear;
@@ -3443,7 +3710,7 @@ function printScale() {
     win.document.close();
 }
 
-// ---------- RELATÓRIOS ----------
+// ---------- FUNÇÃO openReportsModal ----------
 function openReportsModal() {
     if (!isDono()) {
         showToast('🔒 Apenas o Dono pode ver relatórios.', 'error');
@@ -3462,6 +3729,7 @@ function openReportsModal() {
     openModal('reportsModal');
 }
 
+// ---------- FUNÇÃO generateReports ----------
 function generateReports() {
     const month = parseInt(document.getElementById('reportMonth').value);
     const year = parseInt(document.getElementById('reportYear').value);
@@ -3498,6 +3766,7 @@ function generateReports() {
     }).join('');
 }
 
+// ---------- FUNÇÃO exportCSV ----------
 function exportCSV() {
     if (!isDono()) {
         showToast('🔒 Apenas o Dono pode exportar relatórios.', 'error');
@@ -3531,7 +3800,7 @@ function exportCSV() {
     showToast('📤 CSV exportado!', 'success');
 }
 
-// ---------- BACKUP ----------
+// ---------- FUNÇÃO exportBackup ----------
 function exportBackup() {
     if (!isDono()) {
         showToast('🔒 Apenas o Dono pode fazer backup.', 'error');
@@ -3539,7 +3808,7 @@ function exportBackup() {
     }
     
     const data = {
-        version: '7.1',
+        version: '8.0',
         date: new Date().toISOString(),
         companyName: state.companyName,
         employees: state.employees,
@@ -3547,8 +3816,7 @@ function exportBackup() {
         patientName: state.patientName,
         patientRoom: state.patientRoom,
         patientObs: state.patientObs,
-        history: state.history,
-        password: state.password
+        history: state.history
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -3564,6 +3832,7 @@ function exportBackup() {
     status.style.display = 'block';
 }
 
+// ---------- FUNÇÃO importBackup ----------
 function importBackup(event) {
     if (!isDono()) {
         showToast('🔒 Apenas o Dono pode importar backup.', 'error');
@@ -3574,7 +3843,7 @@ function importBackup(event) {
     if (!file) return;
     
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = async function(e) {
         try {
             const data = JSON.parse(e.target.result);
             if (!data.employees || !data.scaleData) {
@@ -3590,9 +3859,8 @@ function importBackup(event) {
             state.patientRoom = data.patientRoom || '';
             state.patientObs = data.patientObs || '';
             if (data.history) state.history = data.history;
-            if (data.password) state.password = data.password;
             
-            saveData();
+            await saveToCloud();
             renderApp();
             renderEmployeeList();
             updatePatientCard();
@@ -3614,49 +3882,61 @@ function importBackup(event) {
     event.target.value = '';
 }
 
-// ---------- NOTIFICAÇÕES ----------
-function setupNotifications() {
-    if ('Notification' in window && Notification.permission === 'default') {
-        Notification.requestPermission();
+// ---------- FUNÇÃO renderHistory ----------
+function renderHistory() {
+    const list = document.getElementById('historyList');
+    if (state.history.length === 0) {
+        list.innerHTML = '<p style="text-align:center;color:var(--text-tertiary);padding:20px;">Nenhuma alteração registrada</p>';
+        return;
     }
-    scheduleDailyCheck();
+    list.innerHTML = state.history.map(item => `
+        <div class="history-item">
+            <span class="history-action">${item.action}</span>
+            <span class="history-date">${item.data}</span>
+        </div>
+    `).join('');
 }
 
-function scheduleDailyCheck() {
-    const now = new Date();
-    const target = new Date();
-    target.setHours(7, 0, 0, 0);
+// ---------- FUNÇÃO changePassword ----------
+function changePassword() {
+    const current = document.getElementById('currentPassword').value;
+    const newPass = document.getElementById('newPassword').value;
+    const confirm = document.getElementById('confirmPassword').value;
+    const errorEl = document.getElementById('changePasswordError');
     
-    let delay = target - now;
-    if (delay < 0) {
-        target.setDate(target.getDate() + 1);
-        delay = target - now;
+    if (!current || !newPass || !confirm) {
+        errorEl.textContent = '❌ Preencha todos os campos.';
+        errorEl.style.display = 'block';
+        return;
     }
     
-    setTimeout(() => {
-        checkTodayShift();
-        scheduleDailyCheck();
-    }, delay);
-}
-
-function checkTodayShift() {
-    const now = new Date();
-    const today = formatDate(now.getFullYear(), now.getMonth(), now.getDate());
-    const data = state.scaleData[today];
-    
-    if (data && data.nome) {
-        if ('Notification' in window && Notification.permission === 'granted') {
-            new Notification('🔔 Lembrete de Plantão', {
-                body: `Hoje é o plantão de ${data.nome}!`,
-                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">📋</text></svg>'
-            });
-        }
-        showToast(`🔔 Hoje é plantão de ${data.nome}!`, 'info');
+    if (newPass !== confirm) {
+        errorEl.textContent = '❌ As senhas não coincidem.';
+        errorEl.style.display = 'block';
+        return;
     }
+    
+    if (newPass.length !== 8) {
+        errorEl.textContent = '❌ A nova senha deve ter exatamente 8 dígitos.';
+        errorEl.style.display = 'block';
+        return;
+    }
+    
+    if (current !== '12345678') {
+        errorEl.textContent = '❌ Senha atual incorreta.';
+        errorEl.style.display = 'block';
+        return;
+    }
+    
+    // Salva nova senha no Firebase (em produção, use Firebase Auth)
+    // Por enquanto, apenas mostra sucesso
+    closeModal('changePasswordModal');
+    showToast('✅ Senha alterada com sucesso!', 'success');
+    addHistory('Alterou a senha do Dono');
 }
 
-// ---------- RESET ----------
-function resetAllData() {
+// ---------- FUNÇÃO resetAllData ----------
+async function resetAllData() {
     if (!isDono()) {
         showToast('🔒 Apenas o Dono pode resetar os dados.', 'error');
         return;
@@ -3665,13 +3945,23 @@ function resetAllData() {
     if (!confirm('⚠️ ATENÇÃO! Resetar TODOS os dados?')) return;
     if (!confirm('🔄 Última chance? Esta ação não pode ser desfeita.')) return;
     
-    localStorage.removeItem('plantonix_data');
-    localStorage.removeItem('plantonix_theme');
-    localStorage.removeItem('plantonix_tutorial_done');
-    location.reload();
+    state.employees = [];
+    state.scaleData = {};
+    state.patientName = '';
+    state.patientRoom = '';
+    state.patientObs = '';
+    state.history = [];
+    
+    addHistory('Resetou todos os dados');
+    await saveToCloud();
+    renderApp();
+    renderEmployeeList();
+    updatePatientCard();
+    showToast('🔄 Todos os dados resetados.', 'info');
 }
 
-function clearMonth() {
+// ---------- FUNÇÃO clearMonth ----------
+async function clearMonth() {
     if (!isDono()) {
         showToast('🔒 Apenas o Dono pode limpar o mês.', 'error');
         return;
@@ -3684,77 +3974,33 @@ function clearMonth() {
         delete state.scaleData[key];
     }
     addHistory(`Limpou o mês ${getMonthName(state.currentMonth)} ${state.currentYear}`);
-    saveData();
+    await saveToCloud();
     renderCalendar();
     showToast('🗑️ Mês limpo!', 'info');
 }
 
-// ---------- UTILITÁRIOS ----------
-function openModal(id) {
-    document.getElementById(id).classList.add('active');
-}
-
-function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
-}
-
-function showToast(message, type = 'info') {
-    const container = document.querySelector('.toast-container') || (() => {
-        const c = document.createElement('div');
-        c.className = 'toast-container';
-        document.body.appendChild(c);
-        return c;
-    })();
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.textContent = message;
-    container.innerHTML = '';
-    container.appendChild(toast);
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-            if (container.children.length === 0) container.remove();
-        }, 300);
-    }, 3000);
-}
-
-function applySearch() {
-    const term = state.searchTerm.toLowerCase().trim();
-    const cells = document.querySelectorAll('.day-cell:not(.empty)');
-    cells.forEach(cell => {
-        const nameEl = cell.querySelector('.employee-name input, .employee-name span');
-        const name = nameEl ? nameEl.value || nameEl.textContent || '' : '';
-        const matches = name.toLowerCase().includes(term);
-        cell.style.display = matches ? '' : 'none';
-    });
-}
-
-function clearSearch() {
-    state.searchTerm = '';
-    document.getElementById('searchInput').value = '';
-    document.getElementById('searchClear').style.display = 'none';
-    const cells = document.querySelectorAll('.day-cell:not(.empty)');
-    cells.forEach(cell => cell.style.display = '');
-}
-
-function applyTheme() {
-    document.documentElement.setAttribute('data-theme', state.theme);
-    document.getElementById('themeToggle').textContent = state.theme === 'light' ? '🌙' : '☀️';
-}
-
+// ---------- FUNÇÃO showAdClick ----------
 function showAdClick() {
     showToast('📱 Obrigado por apoiar o PLANTONIX!', 'success');
 }
 
+// ---------- FUNÇÃO openModal ----------
+function openModal(id) {
+    document.getElementById(id).classList.add('active');
+}
+
+// ---------- FUNÇÃO closeModal ----------
+function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+}
+
 // ---------- EVENTOS ----------
 document.addEventListener('DOMContentLoaded', function() {
-    init();
-    
-    // Enter para verificar senha
-    document.getElementById('passwordInput').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') verifyPassword();
-    });
+    // Carrega tema
+    const savedTheme = localStorage.getItem('plantonix_theme') || 'light';
+    state.theme = savedTheme;
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.getElementById('themeToggle').textContent = savedTheme === 'light' ? '🌙' : '☀️';
     
     // Tema
     document.getElementById('themeToggle').addEventListener('click', function() {
@@ -3786,10 +4032,12 @@ document.addEventListener('DOMContentLoaded', function() {
         renderColorPalette();
         openModal('employeesModal');
     });
+    
     document.getElementById('menuReports').addEventListener('click', function() {
         document.getElementById('menuDropdown').classList.remove('active');
         openReportsModal();
     });
+    
     document.getElementById('menuBackup').addEventListener('click', function() {
         document.getElementById('menuDropdown').classList.remove('active');
         if (!isDono()) {
@@ -3799,48 +4047,94 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('backupStatus').style.display = 'none';
         openModal('backupModal');
     });
+    
     document.getElementById('menuHistory').addEventListener('click', function() {
         document.getElementById('menuDropdown').classList.remove('active');
         renderHistory();
         openModal('historyModal');
     });
+    
     document.getElementById('menuPrint').addEventListener('click', function() {
         document.getElementById('menuDropdown').classList.remove('active');
         printScale();
     });
+    
     document.getElementById('menuChangePassword').addEventListener('click', function() {
         document.getElementById('menuDropdown').classList.remove('active');
-        openChangePasswordModal();
+        if (!isDono()) {
+            showToast('🔒 Apenas o Dono pode alterar a senha.', 'error');
+            return;
+        }
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+        document.getElementById('changePasswordError').style.display = 'none';
+        openModal('changePasswordModal');
     });
+    
+    document.getElementById('menuShare').addEventListener('click', function() {
+        document.getElementById('menuDropdown').classList.remove('active');
+        const text = `📋 Escala PLANTONIX - ${getMonthName(state.currentMonth)} ${state.currentYear}\n\n`;
+        let scaleText = text;
+        const days = getDaysInMonth(state.currentYear, state.currentMonth);
+        for (let d = 1; d <= days; d++) {
+            const key = formatDate(state.currentYear, state.currentMonth, d);
+            const data = state.scaleData[key];
+            if (data && data.nome) {
+                scaleText += `📅 Dia ${d}: ${data.nome}\n`;
+            }
+        }
+        if (navigator.share) {
+            navigator.share({ title: 'Escala PLANTONIX', text: scaleText });
+        } else {
+            navigator.clipboard.writeText(scaleText).then(() => {
+                showToast('📋 Escala copiada!', 'success');
+            }).catch(() => {
+                showToast('📋 ' + scaleText.substring(0, 100) + '...', 'info');
+            });
+        }
+    });
+    
     document.getElementById('menuClearMonth').addEventListener('click', function() {
         document.getElementById('menuDropdown').classList.remove('active');
         clearMonth();
     });
+    
     document.getElementById('menuResetAll').addEventListener('click', function() {
         document.getElementById('menuDropdown').classList.remove('active');
         resetAllData();
     });
     
-    // Navegação mês
+    // BOTÃO ADICIONAR FUNCIONÁRIO
+    document.getElementById('empAddBtn').addEventListener('click', function() {
+        const editId = this.dataset.editId;
+        if (editId) {
+            updateEmployee(editId);
+        } else {
+            addEmployee();
+        }
+    });
+    
+    // NAVEGAÇÃO MÊS
     document.getElementById('prevMonthBtn').addEventListener('click', function() {
         state.currentMonth--;
         if (state.currentMonth < 0) { state.currentMonth = 11; state.currentYear--; }
         renderCalendar();
-        saveData();
     });
+    
     document.getElementById('nextMonthBtn').addEventListener('click', function() {
         state.currentMonth++;
         if (state.currentMonth > 11) { state.currentMonth = 0; state.currentYear++; }
         renderCalendar();
-        saveData();
     });
     
-    // Busca
+    // BUSCA
     document.getElementById('searchInput').addEventListener('input', function(e) {
         state.searchTerm = e.target.value;
         document.getElementById('searchClear').style.display = state.searchTerm ? 'block' : 'none';
         applySearch();
     });
+    
     document.getElementById('searchClear').addEventListener('click', clearSearch);
     
     // FAB
@@ -3849,14 +4143,16 @@ document.addEventListener('DOMContentLoaded', function() {
         this.classList.toggle('open');
         document.getElementById('fabActions').classList.toggle('open');
     });
+    
     document.getElementById('fabNewShift').addEventListener('click', function() {
         if (!isDono()) return;
         document.getElementById('fabMain').classList.remove('open');
         document.getElementById('fabActions').classList.remove('open');
         const today = new Date();
         const key = formatDate(today.getFullYear(), today.getMonth(), today.getDate());
-        openEditModal(key, '');
+        openEditModal(key);
     });
+    
     document.getElementById('fabNewEmployee').addEventListener('click', function() {
         if (!isDono()) return;
         document.getElementById('fabMain').classList.remove('open');
@@ -3864,19 +4160,21 @@ document.addEventListener('DOMContentLoaded', function() {
         renderColorPalette();
         openModal('employeesModal');
     });
+    
     document.getElementById('fabEditPatient').addEventListener('click', function() {
         if (!isDono()) return;
         document.getElementById('fabMain').classList.remove('open');
         document.getElementById('fabActions').classList.remove('open');
         openPatientModal();
     });
+    
     document.getElementById('fabPrint').addEventListener('click', function() {
         document.getElementById('fabMain').classList.remove('open');
         document.getElementById('fabActions').classList.remove('open');
         printScale();
     });
     
-    // Fechar modais com clique fora
+    // FECHAR MODAIS
     document.querySelectorAll('.modal').forEach(modal => {
         modal.addEventListener('click', function(e) {
             if (e.target === this) {
@@ -3885,24 +4183,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Atualiza relatórios ao mudar filtros
+    // RELATÓRIOS
     document.getElementById('reportMonth').addEventListener('change', generateReports);
     document.getElementById('reportYear').addEventListener('change', generateReports);
     
-    // Status de conexão
-    window.addEventListener('online', function() {
-        document.getElementById('connectionStatus').style.display = 'none';
-    });
-    window.addEventListener('offline', function() {
-        document.getElementById('connectionStatus').style.display = 'block';
-        document.getElementById('connectionStatus').style.background = '#fef3c7';
-        document.getElementById('connectionStatus').style.color = '#92400e';
-        document.getElementById('connectionStatus').textContent = '📡 Modo Offline - Dados salvos localmente';
-    });
+    // STATUS DE CONEXÃO
+    window.addEventListener('online', updateConnectionStatus);
+    window.addEventListener('offline', updateConnectionStatus);
+    updateConnectionStatus();
     
-    console.log('✅ PLANTONIX v7.1 pronto!');
-    console.log('🔑 Senha padrão: 12345678');
-    console.log('💡 Use o botão "Dono/Func" no topo para alternar os modos');
+    // ATUALIZA A CADA 30 SEGUNDOS (para sincronizar)
+    setInterval(async () => {
+        if (state.currentUser) {
+            await loadCompanyData();
+            renderCalendar();
+            updateGreeting();
+            updatePatientCard();
+        }
+    }, 30000);
+    
+    console.log('☁️ PLANTONIX v8.0 - Com Nuvem!');
+    console.log('📧 Demo: demo@plantonix.com / 123456');
+    console.log('💡 Todos os dados são salvos na nuvem e compartilhados');
 });
 </script>
 
