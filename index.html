@@ -19,7 +19,7 @@
     
     <style>
         /* ============================================
-           PLANTONIX v4.0 - ESTILOS COMPLETOS
+           PLANTONIX v4.1 - ESTILOS COMPLETOS
            ============================================ */
         * {
             margin: 0;
@@ -167,6 +167,8 @@
             width: 100%;
             box-shadow: var(--shadow-xl);
             transition: background var(--transition);
+            max-height: 95vh;
+            overflow-y: auto;
         }
 
         .login-box .logo {
@@ -192,7 +194,6 @@
             margin-top: 4px;
         }
 
-        /* ===== TABS ===== */
         .login-tabs {
             display: flex;
             border-radius: var(--radius-md);
@@ -222,7 +223,6 @@
             transform: scale(0.96);
         }
 
-        /* ===== PERFIL SELECTOR ===== */
         .profile-selector-login {
             display: flex;
             gap: 12px;
@@ -274,7 +274,6 @@
             transform: scale(0.96);
         }
 
-        /* ===== FORM ===== */
         .login-box .form-group {
             margin-bottom: 16px;
         }
@@ -427,7 +426,6 @@
             text-decoration: underline;
         }
 
-        /* ===== EMPRESA FIELDS (Admin) ===== */
         .company-fields {
             display: none;
         }
@@ -436,7 +434,6 @@
             display: block;
         }
 
-        /* ===== CONVITE FIELDS (Colaborador) ===== */
         .invite-fields {
             display: none;
         }
@@ -467,9 +464,6 @@
             display: flex;
         }
 
-        /* ============================================
-           APP HEADER
-           ============================================ */
         .app-header {
             display: flex;
             align-items: center;
@@ -595,9 +589,6 @@
             color: var(--colab-color);
         }
 
-        /* ============================================
-           MENU
-           ============================================ */
         .menu-dropdown {
             display: none;
             position: absolute;
@@ -658,9 +649,6 @@
             color: var(--danger);
         }
 
-        /* ============================================
-           BRAND
-           ============================================ */
         .brand-area {
             text-align: center;
             padding: 12px 0 14px;
@@ -708,9 +696,6 @@
             opacity: 1;
         }
 
-        /* ============================================
-           MODO BADGE
-           ============================================ */
         .mode-badge {
             text-align: center;
             padding: 4px 0;
@@ -741,9 +726,6 @@
             margin-bottom: 6px;
         }
 
-        /* ============================================
-           GREETING CARD
-           ============================================ */
         .greeting-card {
             background: var(--primary-gradient);
             border-radius: var(--radius-lg);
@@ -843,9 +825,6 @@
             border-radius: var(--radius-full);
         }
 
-        /* ============================================
-           PATIENT CARD
-           ============================================ */
         .patient-card {
             background: var(--bg-secondary);
             border-radius: var(--radius-lg);
@@ -922,9 +901,6 @@
             opacity: 1;
         }
 
-        /* ============================================
-           FLORENCE NIGHTINGALE
-           ============================================ */
         .quote-card-florence {
             background: var(--bg-secondary);
             border-radius: var(--radius-lg);
@@ -992,9 +968,6 @@
             50% { transform: scale(1.15); }
         }
 
-        /* ============================================
-           MONTH COUNTER
-           ============================================ */
         .month-counter {
             display: flex;
             justify-content: space-between;
@@ -1027,9 +1000,6 @@
             transition: color var(--transition);
         }
 
-        /* ============================================
-           MONTH NAV
-           ============================================ */
         .month-nav {
             display: flex;
             align-items: center;
@@ -1068,9 +1038,6 @@
             transition: color var(--transition);
         }
 
-        /* ============================================
-           CALENDAR
-           ============================================ */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -1497,9 +1464,6 @@
             text-shadow: none !important;
         }
 
-        /* ============================================
-           SEARCH
-           ============================================ */
         .search-bar {
             display: flex;
             align-items: center;
@@ -1547,9 +1511,6 @@
             background: var(--bg-tertiary);
         }
 
-        /* ============================================
-           FOOTER
-           ============================================ */
         .app-footer {
             margin-top: auto;
             padding: 14px 0 6px;
@@ -1582,9 +1543,6 @@
             color: #e74c6f;
         }
 
-        /* ============================================
-           FAB - BOTÃO FLUTUANTE
-           ============================================ */
         .fab {
             position: fixed;
             bottom: calc(var(--banner-height) + 20px);
@@ -1683,9 +1641,6 @@
             cursor: not-allowed;
         }
 
-        /* ============================================
-           MODALS
-           ============================================ */
         .modal {
             display: none;
             position: fixed;
@@ -1833,9 +1788,6 @@
             color: white;
         }
 
-        /* ============================================
-           COLABORADORES
-           ============================================ */
         .employee-form {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1977,9 +1929,6 @@
             display: block;
         }
 
-        /* ============================================
-           REPORTS
-           ============================================ */
         .report-filters {
             display: flex;
             gap: 8px;
@@ -2089,9 +2038,6 @@
             cursor: pointer;
         }
 
-        /* ============================================
-           BACKUP
-           ============================================ */
         .backup-actions {
             display: flex;
             flex-direction: column;
@@ -2165,9 +2111,6 @@
             font-weight: 500;
         }
 
-        /* ============================================
-           TOAST
-           ============================================ */
         .toast-container {
             position: fixed;
             bottom: calc(var(--banner-height) + 20px);
@@ -2211,9 +2154,6 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* ============================================
-           RESPONSIVE
-           ============================================ */
         @media (max-width: 380px) {
             .day-cell { min-height: 58px; padding: 4px 2px; }
             .day-cell .day-number { font-size: 10px; }
@@ -2282,13 +2222,11 @@
             <p>Gestão de Escalas para Home Care</p>
         </div>
 
-        <!-- TABS -->
         <div class="login-tabs">
             <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">🔐 Entrar</button>
             <button class="tab-btn" id="tabSignup" onclick="switchTab('signup')">📝 Criar Conta</button>
         </div>
 
-        <!-- PERFIL SELECTOR -->
         <div class="profile-selector-login">
             <div class="profile-option selected-admin" id="profileAdmin" onclick="selectProfileLogin('admin')">
                 <span class="profile-icon">👑</span>
@@ -2300,17 +2238,17 @@
             </div>
         </div>
 
-        <!-- ===== LOGIN FORM ===== -->
+        <!-- LOGIN FORM -->
         <div id="loginForm">
             <div class="form-group">
                 <label>E-mail</label>
-                <input type="email" id="loginEmail" placeholder="seu@email.com">
+                <input type="email" id="loginEmail" placeholder="seu@email.com" value="admin@plantonix.com">
             </div>
 
             <div class="form-group">
                 <label>Senha</label>
                 <div class="password-wrapper">
-                    <input type="password" id="loginPassword" placeholder="Digite sua senha">
+                    <input type="password" id="loginPassword" placeholder="Digite sua senha" value="123456">
                     <button type="button" class="password-toggle" onclick="togglePassword('loginPassword', this)">👁️</button>
                 </div>
             </div>
@@ -2324,7 +2262,7 @@
             <div id="loginSuccess" class="login-success"></div>
         </div>
 
-        <!-- ===== SIGNUP FORM ===== -->
+        <!-- SIGNUP FORM -->
         <div id="signupForm" style="display:none;">
             <div class="form-group">
                 <label>Nome Completo</label>
@@ -2352,7 +2290,6 @@
                 </div>
             </div>
 
-            <!-- Campos para Administrador -->
             <div class="company-fields" id="adminFields">
                 <div class="form-group">
                     <label>Nome da Empresa</label>
@@ -2364,7 +2301,6 @@
                 </div>
             </div>
 
-            <!-- Campos para Colaborador -->
             <div class="invite-fields" id="colabFields">
                 <div class="form-group">
                     <label>Código da Empresa</label>
@@ -2408,7 +2344,6 @@
    APP PRINCIPAL
    ============================================ -->
 <div class="app-container" id="app">
-    <!-- HEADER -->
     <header class="app-header">
         <button class="menu-icon" id="menuIcon" aria-label="Menu">⋮</button>
         <div class="app-title">
@@ -2422,7 +2357,6 @@
         </div>
     </header>
 
-    <!-- MENU -->
     <nav class="menu-dropdown" id="menuDropdown" role="menu">
         <div id="adminMenuItems">
             <button class="menu-item" id="menuEmployees" role="menuitem">👥 Colaboradores</button>
@@ -2444,10 +2378,9 @@
             <button class="menu-item" id="menuColabChangePassword" role="menuitem">🔑 Alterar Senha</button>
         </div>
         <div class="menu-divider"></div>
-        <button class="menu-item" style="opacity:0.5; font-size:11px; cursor:default;">☁️ PLANTONIX v4.0</button>
+        <button class="menu-item" style="opacity:0.5; font-size:11px; cursor:default;">☁️ PLANTONIX v4.1</button>
     </nav>
 
-    <!-- BRAND -->
     <div class="brand-area">
         <div class="brand-name">PLANT<span class="highlight">ONIX</span></div>
         <div class="brand-subname" id="brandSubname" onclick="editCompanyName()">
@@ -2459,7 +2392,6 @@
     <div class="mode-badge admin" id="modeBadge">👑 Administrador - Controle total</div>
     <div class="cloud-badge">☁️ Dados salvos na nuvem • Sincronizado em tempo real</div>
 
-    <!-- GREETING -->
     <div class="greeting-card" id="greetingCard">
         <div class="greeting-content">
             <div class="greeting-text" id="greetingText">Bom dia, <span class="highlight-name" id="greetingName">Administrador</span></div>
@@ -2473,7 +2405,6 @@
         </div>
     </div>
 
-    <!-- PATIENT -->
     <div class="patient-card" id="patientCard" onclick="openPatientModal()">
         <div class="patient-label"><span class="icon">👤</span> Paciente do Plantão</div>
         <div class="patient-name" id="patientNameDisplay">
@@ -2483,7 +2414,6 @@
         <span class="patient-edit-hint">✏️ editar</span>
     </div>
 
-    <!-- FLORENCE -->
     <div class="quote-card-florence" id="florenceCard">
         <div class="quote-text">
             A Enfermagem é uma arte; e, para realizá-la como arte, requer uma devoção tão exclusiva, um preparo tão rigoroso quanto a obra de qualquer pintor ou escultor.
@@ -2528,7 +2458,9 @@
     </footer>
 </div>
 
-<!-- FAB -->
+<!-- ============================================
+   FAB - BOTÃO FLUTUANTE (APENAS ADMIN)
+   ============================================ -->
 <div class="fab" id="fab">
     <div class="fab-actions" id="fabActions">
         <button id="fabNewShift" title="Novo plantão">➕</button>
@@ -2539,7 +2471,10 @@
     <button class="fab-main" id="fabMain" aria-label="Ações rápidas">✚</button>
 </div>
 
-<!-- MODALS -->
+<!-- ============================================
+   MODALS
+   ============================================ -->
+
 <div class="modal" id="editModal">
     <div class="modal-content">
         <h3>✏️ Editar colaborador</h3>
@@ -2670,7 +2605,7 @@
    ============================================ -->
 <script>
 /* ============================================
-   PLANTONIX v4.0 - CÓDIGO COMPLETO REFATORADO
+   PLANTONIX v4.1 - CÓDIGO COMPLETO CORRIGIDO
    ============================================ */
 
 // ---------- CONFIGURAÇÃO FIREBASE ----------
@@ -2814,7 +2749,6 @@ function switchTab(tab) {
         ? 'Não tem conta? <a onclick="switchTab(\'signup\')">Crie uma agora</a>'
         : 'Já tem conta? <a onclick="switchTab(\'login\')">Faça login</a>';
     
-    // Mostra campos específicos do perfil
     updateProfileFields();
 }
 
@@ -2843,6 +2777,58 @@ function togglePassword(inputId, button) {
     } else {
         input.type = 'password';
         button.textContent = '👁️';
+    }
+}
+
+// ---------- FUNÇÃO PARA BUSCAR USUÁRIO ----------
+async function findUserByEmail(email) {
+    try {
+        // Tenta collectionGroup (requer índice)
+        const userQuery = await db.collectionGroup('usuarios')
+            .where('email', '==', email)
+            .get();
+        
+        if (userQuery.empty) {
+            return null;
+        }
+        
+        const doc = userQuery.docs[0];
+        const pathParts = doc.ref.path.split('/');
+        const companyId = pathParts[1];
+        
+        return {
+            userData: doc.data(),
+            companyId: companyId,
+            doc: doc
+        };
+        
+    } catch (error) {
+        console.warn('⚠️ Erro ao buscar usuário (collectionGroup):', error);
+        
+        // FALLBACK: Buscar sem collectionGroup
+        try {
+            const empresasSnapshot = await db.collection('empresas').get();
+            
+            for (const empresaDoc of empresasSnapshot.docs) {
+                const userDoc = await empresaDoc.ref
+                    .collection('usuarios')
+                    .where('email', '==', email)
+                    .get();
+                
+                if (!userDoc.empty) {
+                    return {
+                        userData: userDoc.docs[0].data(),
+                        companyId: empresaDoc.id,
+                        doc: userDoc.docs[0]
+                    };
+                }
+            }
+            return null;
+            
+        } catch (fallbackError) {
+            console.error('❌ Erro no fallback:', fallbackError);
+            return null;
+        }
     }
 }
 
@@ -2907,22 +2893,16 @@ async function handleLogin() {
         const userCredential = await auth.signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
         
-        // Busca o perfil do usuário
-        const userQuery = await db.collectionGroup('usuarios')
-            .where('email', '==', email)
-            .get();
+        const result = await findUserByEmail(email);
         
-        if (userQuery.empty) {
+        if (!result) {
             await auth.signOut();
             throw new Error('Usuário não encontrado. Crie uma conta primeiro.');
         }
         
-        const userDoc = userQuery.docs[0];
-        const userData = userDoc.data();
-        const pathParts = userDoc.ref.path.split('/');
-        const companyId = pathParts[1];
+        const userData = result.userData;
+        const companyId = result.companyId;
         
-        // Valida o perfil
         if (userData.perfil !== profile) {
             await auth.signOut();
             throw new Error(`Este usuário é um ${userData.perfil === 'administrador' ? 'Administrador' : 'Colaborador'}. Acesse como ${userData.perfil === 'administrador' ? 'Administrador' : 'Colaborador'}.`);
@@ -2964,7 +2944,6 @@ async function handleSignup() {
     errorEl.style.display = 'none';
     successEl.style.display = 'none';
     
-    // Validações básicas
     if (!nome || !email || !password || !confirmPassword) {
         errorEl.textContent = '❌ Preencha todos os campos.';
         errorEl.style.display = 'block';
@@ -2987,27 +2966,34 @@ async function handleSignup() {
     btn.textContent = '⏳ Criando conta...';
     
     try {
-        // Cria usuário no Auth
+        console.log('🚀 INICIANDO CADASTRO...');
+        
+        const existingUser = await findUserByEmail(email);
+        if (existingUser) {
+            throw new Error('Este e-mail já está cadastrado. Faça login.');
+        }
+        
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         const user = userCredential.user;
+        console.log('✅ Usuário criado no Auth. UID:', user.uid);
         
         let companyId;
         let isAdmin = false;
         
         if (profile === 'admin') {
-            // ADMINISTRADOR - Cria nova empresa
             const companyName = document.getElementById('signupCompanyName').value.trim();
             const companySubname = document.getElementById('signupCompanySubname').value.trim();
             
             if (!companyName) {
-                await auth.signOut();
+                await auth.currentUser.delete();
                 throw new Error('❌ Digite o nome da empresa.');
             }
             
             companyId = 'emp_' + Date.now();
             isAdmin = true;
             
-            // Cria a empresa
+            console.log('🏢 Criando empresa:', companyId);
+            
             await db.collection('empresas').doc(companyId).set({
                 nome: companyName,
                 subnome: companySubname || companyName,
@@ -3015,8 +3001,8 @@ async function handleSignup() {
                 criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
                 status: 'ativa'
             });
+            console.log('✅ Empresa criada');
             
-            // Cria o usuário como administrador
             await db.collection('empresas')
                 .doc(companyId)
                 .collection('usuarios')
@@ -3028,8 +3014,8 @@ async function handleSignup() {
                     ativo: true,
                     criadoEm: firebase.firestore.FieldValue.serverTimestamp()
                 });
+            console.log('✅ Usuário admin criado');
             
-            // Cria estrutura de dados
             await db.collection('empresas')
                 .doc(companyId)
                 .collection('colaboradores')
@@ -3057,27 +3043,29 @@ async function handleSignup() {
                     obs: ''
                 });
             
+            console.log('✅ Estrutura da empresa criada');
+            
         } else {
-            // COLABORADOR - Valida empresa
             const companyCode = document.getElementById('signupCompanyCode').value.trim();
             
             if (!companyCode) {
-                await auth.signOut();
+                await auth.currentUser.delete();
                 throw new Error('❌ Digite o código da empresa.');
             }
             
-            // Verifica se a empresa existe
+            console.log('🔍 Buscando empresa:', companyCode);
+            
             const companyDoc = await db.collection('empresas').doc(companyCode).get();
             
             if (!companyDoc.exists) {
-                await auth.signOut();
+                await auth.currentUser.delete();
                 throw new Error('❌ Empresa não encontrada. Verifique o código.');
             }
             
             companyId = companyCode;
             isAdmin = false;
+            console.log('✅ Empresa encontrada');
             
-            // Verifica se o usuário já está vinculado
             const userCheck = await db.collection('empresas')
                 .doc(companyId)
                 .collection('usuarios')
@@ -3085,11 +3073,10 @@ async function handleSignup() {
                 .get();
             
             if (!userCheck.empty) {
-                await auth.signOut();
+                await auth.currentUser.delete();
                 throw new Error('❌ Este e-mail já está vinculado a esta empresa.');
             }
             
-            // Cria o usuário como colaborador
             await db.collection('empresas')
                 .doc(companyId)
                 .collection('usuarios')
@@ -3102,7 +3089,8 @@ async function handleSignup() {
                     criadoEm: firebase.firestore.FieldValue.serverTimestamp()
                 });
             
-            // Adiciona aos colaboradores
+            console.log('✅ Colaborador criado');
+            
             await db.collection('empresas')
                 .doc(companyId)
                 .collection('colaboradores')
@@ -3115,6 +3103,8 @@ async function handleSignup() {
                     email: email,
                     criadoEm: firebase.firestore.FieldValue.serverTimestamp()
                 });
+            
+            console.log('✅ Colaborador adicionado à lista');
         }
         
         state.currentUser = user;
@@ -3132,11 +3122,32 @@ async function handleSignup() {
         renderApp();
         showToast(`🎉 Bem-vindo ao PLANTONIX${isAdmin ? ' como Administrador' : ''}!`, 'success');
         
+        console.log('🎉 CADASTRO FINALIZADO COM SUCESSO!');
+        
     } catch (error) {
-        console.error('Erro ao criar conta:', error);
-        errorEl.textContent = `❌ ${error.message || 'Erro ao criar conta. Tente novamente.'}`;
+        console.error('❌ ERRO NO CADASTRO:', error);
+        
+        let errorMessage = error.message || 'Erro ao criar conta. Tente novamente.';
+        
+        if (error.code === 'auth/email-already-in-use') {
+            errorMessage = '❌ Este e-mail já está em uso. Faça login ou use outro e-mail.';
+        } else if (error.code === 'auth/invalid-email') {
+            errorMessage = '❌ E-mail inválido.';
+        } else if (error.code === 'auth/weak-password') {
+            errorMessage = '❌ Senha muito fraca. Use pelo menos 6 caracteres.';
+        }
+        
+        errorEl.textContent = errorMessage;
         errorEl.style.display = 'block';
-        await auth.signOut();
+        
+        if (auth.currentUser) {
+            try {
+                await auth.currentUser.delete();
+                console.log('🧹 Usuário removido do Auth (rollback)');
+            } catch (e) {
+                console.warn('⚠️ Não foi possível remover o usuário:', e);
+            }
+        }
     }
     
     btn.disabled = false;
@@ -4151,7 +4162,7 @@ function exportBackup() {
     }
     
     const data = {
-        version: '4.0',
+        version: '4.1',
         date: new Date().toISOString(),
         companyName: state.companyName,
         employees: state.employees,
@@ -4265,7 +4276,6 @@ function changePassword() {
         return;
     }
     
-    // Por simplicidade, apenas mostra sucesso
     closeModal('changePasswordModal');
     showToast('✅ Senha alterada com sucesso!', 'success');
     addHistory('Alterou a senha do usuário');
@@ -4383,7 +4393,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Menu items - ADMIN
     document.getElementById('menuEmployees').addEventListener('click', function() {
         document.getElementById('menuDropdown').classList.remove('active');
         if (!state.isAdmin) {
@@ -4448,7 +4457,6 @@ document.addEventListener('DOMContentLoaded', function() {
         resetAllData();
     });
     
-    // Menu items - COLABORADOR
     document.getElementById('menuColabPrint').addEventListener('click', function() {
         document.getElementById('menuDropdown').classList.remove('active');
         printScale();
@@ -4468,7 +4476,6 @@ document.addEventListener('DOMContentLoaded', function() {
         openModal('changePasswordModal');
     });
     
-    // BOTÃO ADICIONAR COLABORADOR
     document.getElementById('empAddBtn').addEventListener('click', function() {
         const editId = this.dataset.editId;
         if (editId) {
@@ -4478,7 +4485,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // NAVEGAÇÃO MÊS
     document.getElementById('prevMonthBtn').addEventListener('click', function() {
         state.currentMonth--;
         if (state.currentMonth < 0) { state.currentMonth = 11; state.currentYear--; }
@@ -4491,7 +4497,6 @@ document.addEventListener('DOMContentLoaded', function() {
         renderCalendar();
     });
     
-    // BUSCA
     document.getElementById('searchInput').addEventListener('input', function(e) {
         state.searchTerm = e.target.value;
         document.getElementById('searchClear').style.display = state.searchTerm ? 'block' : 'none';
@@ -4500,7 +4505,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     document.getElementById('searchClear').addEventListener('click', clearSearch);
     
-    // FAB
     document.getElementById('fabMain').addEventListener('click', function() {
         if (!state.isAdmin) return;
         this.classList.toggle('open');
@@ -4537,7 +4541,6 @@ document.addEventListener('DOMContentLoaded', function() {
         printScale();
     });
     
-    // FECHAR MODAIS
     document.querySelectorAll('.modal').forEach(modal => {
         modal.addEventListener('click', function(e) {
             if (e.target === this) {
@@ -4546,30 +4549,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // RELATÓRIOS
     document.getElementById('reportMonth').addEventListener('change', generateReports);
     document.getElementById('reportYear').addEventListener('change', generateReports);
     
-    // STATUS DE CONEXÃO
     window.addEventListener('online', updateConnectionStatus);
     window.addEventListener('offline', updateConnectionStatus);
     updateConnectionStatus();
     
-    // LISTENER DE AUTENTICAÇÃO
     auth.onAuthStateChanged(async (user) => {
         if (user) {
             state.currentUser = user;
-            const userQuery = await db.collectionGroup('usuarios')
-                .where('email', '==', user.email)
-                .get();
+            const result = await findUserByEmail(user.email);
             
-            if (!userQuery.empty) {
-                const userDoc = userQuery.docs[0];
-                const userData = userDoc.data();
-                const pathParts = userDoc.ref.path.split('/');
-                state.companyId = pathParts[1];
-                state.isAdmin = userData.perfil === 'administrador';
-                state.profile = userData.perfil;
+            if (result) {
+                state.companyId = result.companyId;
+                state.isAdmin = result.userData.perfil === 'administrador';
+                state.profile = result.userData.perfil;
                 
                 await loadCompanyData();
                 renderApp();
@@ -4589,7 +4584,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    console.log('☁️ PLANTONIX v4.0 carregado!');
+    console.log('☁️ PLANTONIX v4.1 carregado!');
     console.log('👑 Administrador: admin@plantonix.com / 123456');
     console.log('👤 Colaborador: colab@plantonix.com / 123456');
     console.log('💡 Selecione o perfil antes de fazer login ou criar conta!');
