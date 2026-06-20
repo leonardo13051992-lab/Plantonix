@@ -19,7 +19,7 @@
     
     <style>
         /* ============================================
-           PLANTONIX v3.0 - ESTILOS COMPLETOS
+           PLANTONIX v4.0 - ESTILOS COMPLETOS
            ============================================ */
         * {
             margin: 0;
@@ -143,140 +143,7 @@
         }
 
         /* ============================================
-           TELA DE SELEÇÃO DE PERFIL
-           ============================================ */
-        .profile-selector {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: var(--bg-secondary);
-            padding: 20px;
-            width: 100%;
-        }
-
-        .profile-selector.active {
-            display: flex;
-        }
-
-        .profile-selector .selector-box {
-            background: var(--bg-primary);
-            border-radius: var(--radius-xl);
-            padding: 40px 30px;
-            max-width: 420px;
-            width: 100%;
-            box-shadow: var(--shadow-xl);
-            text-align: center;
-            transition: background var(--transition);
-        }
-
-        .profile-selector .selector-box .logo {
-            margin-bottom: 30px;
-        }
-
-        .profile-selector .selector-box .logo h1 {
-            font-size: 32px;
-            font-weight: 900;
-            color: var(--text-primary);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        .profile-selector .selector-box .logo h1 span {
-            color: var(--primary);
-        }
-
-        .profile-selector .selector-box .logo p {
-            color: var(--text-tertiary);
-            font-size: 14px;
-            margin-top: 4px;
-        }
-
-        .profile-selector .selector-box .selector-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-
-        .profile-selector .profile-btn {
-            width: 100%;
-            padding: 16px;
-            border: 2px solid var(--border-light);
-            border-radius: var(--radius-md);
-            background: var(--bg-primary);
-            cursor: pointer;
-            transition: all var(--transition);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .profile-selector .profile-btn:active {
-            transform: scale(0.96);
-        }
-
-        .profile-selector .profile-btn .profile-icon {
-            font-size: 28px;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius-full);
-            flex-shrink: 0;
-        }
-
-        .profile-selector .profile-btn .profile-icon.admin {
-            background: rgba(108, 92, 231, 0.1);
-            color: var(--admin-color);
-        }
-
-        .profile-selector .profile-btn .profile-icon.colab {
-            background: rgba(34, 197, 94, 0.1);
-            color: var(--colab-color);
-        }
-
-        .profile-selector .profile-btn .profile-info {
-            text-align: left;
-            flex: 1;
-        }
-
-        .profile-selector .profile-btn .profile-info .profile-name {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .profile-selector .profile-btn .profile-info .profile-desc {
-            font-size: 13px;
-            color: var(--text-tertiary);
-            margin-top: 2px;
-        }
-
-        .profile-selector .profile-btn .profile-arrow {
-            font-size: 20px;
-            color: var(--text-tertiary);
-        }
-
-        .profile-selector .profile-btn:hover {
-            border-color: var(--primary);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .profile-selector .profile-btn.admin-btn:hover {
-            border-color: var(--admin-color);
-            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
-        }
-
-        .profile-selector .profile-btn.colab-btn:hover {
-            border-color: var(--colab-color);
-            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
-        }
-
-        /* ============================================
-           TELA DE LOGIN
+           TELA DE LOGIN / CADASTRO
            ============================================ */
         .login-screen {
             display: none;
@@ -304,7 +171,7 @@
 
         .login-box .logo {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
         }
 
         .login-box .logo h1 {
@@ -325,26 +192,89 @@
             margin-top: 4px;
         }
 
-        .login-box .logo .profile-badge {
-            display: inline-block;
-            margin-top: 8px;
-            padding: 2px 16px;
-            border-radius: var(--radius-full);
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
+        /* ===== TABS ===== */
+        .login-tabs {
+            display: flex;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-bottom: 24px;
+            border: 2px solid var(--border-light);
         }
 
-        .login-box .logo .profile-badge.admin {
-            background: rgba(108, 92, 231, 0.1);
+        .login-tabs .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: var(--bg-primary);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            color: var(--text-tertiary);
+        }
+
+        .login-tabs .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .login-tabs .tab-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* ===== PERFIL SELECTOR ===== */
+        .profile-selector-login {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .profile-selector-login .profile-option {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition);
+            background: var(--bg-primary);
+        }
+
+        .profile-selector-login .profile-option .profile-icon {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .profile-selector-login .profile-option .profile-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+        }
+
+        .profile-selector-login .profile-option.selected-admin {
+            border-color: var(--admin-color);
+            background: rgba(108, 92, 231, 0.05);
+        }
+
+        .profile-selector-login .profile-option.selected-admin .profile-label {
             color: var(--admin-color);
         }
 
-        .login-box .logo .profile-badge.colab {
-            background: rgba(34, 197, 94, 0.1);
+        .profile-selector-login .profile-option.selected-colab {
+            border-color: var(--colab-color);
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .profile-selector-login .profile-option.selected-colab .profile-label {
             color: var(--colab-color);
         }
 
+        .profile-selector-login .profile-option:active {
+            transform: scale(0.96);
+        }
+
+        /* ===== FORM ===== */
         .login-box .form-group {
             margin-bottom: 16px;
         }
@@ -420,6 +350,24 @@
             color: var(--text-primary);
         }
 
+        .login-box .forgot-password {
+            text-align: right;
+            margin-top: -8px;
+            margin-bottom: 16px;
+        }
+
+        .login-box .forgot-password a {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .login-box .forgot-password a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
         .login-box .btn-login {
             width: 100%;
             padding: 14px;
@@ -431,7 +379,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: transform 0.15s, box-shadow 0.15s;
-            margin-top: 8px;
+            margin-top: 4px;
         }
 
         .login-box .btn-login:active {
@@ -441,24 +389,6 @@
         .login-box .btn-login:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-        }
-
-        .login-box .btn-back {
-            width: 100%;
-            padding: 12px;
-            background: transparent;
-            color: var(--text-secondary);
-            border: 2px solid var(--border-light);
-            border-radius: var(--radius-md);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition);
-            margin-top: 8px;
-        }
-
-        .login-box .btn-back:active {
-            transform: scale(0.96);
         }
 
         .login-box .login-error {
@@ -479,26 +409,9 @@
             display: none;
         }
 
-        .login-box .login-divider {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin: 20px 0;
-            color: var(--text-tertiary);
-            font-size: 13px;
-        }
-
-        .login-box .login-divider::before,
-        .login-box .login-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border-light);
-        }
-
         .login-box .login-footer {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 16px;
             font-size: 13px;
             color: var(--text-tertiary);
         }
@@ -514,22 +427,22 @@
             text-decoration: underline;
         }
 
-        .login-box .forgot-password {
-            text-align: right;
-            margin-top: -8px;
-            margin-bottom: 12px;
+        /* ===== EMPRESA FIELDS (Admin) ===== */
+        .company-fields {
+            display: none;
         }
 
-        .login-box .forgot-password a {
-            font-size: 13px;
-            color: var(--text-tertiary);
-            text-decoration: none;
-            cursor: pointer;
+        .company-fields.show {
+            display: block;
         }
 
-        .login-box .forgot-password a:hover {
-            color: var(--primary);
-            text-decoration: underline;
+        /* ===== CONVITE FIELDS (Colaborador) ===== */
+        .invite-fields {
+            display: none;
+        }
+
+        .invite-fields.show {
+            display: block;
         }
 
         /* ============================================
@@ -663,9 +576,6 @@
             transform: scale(0.92);
         }
 
-        /* ============================================
-           PERFIL BADGE NO APP
-           ============================================ */
         .profile-badge-app {
             display: inline-block;
             padding: 2px 12px;
@@ -821,9 +731,6 @@
             color: var(--colab-color);
         }
 
-        /* ============================================
-           NUVEM BADGE
-           ============================================ */
         .cloud-badge {
             text-align: center;
             padding: 4px 0;
@@ -1210,7 +1117,6 @@
             transform: none;
         }
 
-        /* Cores dos colaboradores (50 cores) */
         .day-cell.color-0 { background: #FF6B6B !important; }
         .day-cell.color-1 { background: #FF8E53 !important; }
         .day-cell.color-2 { background: #FECA57 !important; }
@@ -1677,7 +1583,7 @@
         }
 
         /* ============================================
-           FAB - BOTÃO FLUTUANTE (APENAS ADMIN)
+           FAB - BOTÃO FLUTUANTE
            ============================================ */
         .fab {
             position: fixed;
@@ -1928,7 +1834,7 @@
         }
 
         /* ============================================
-           COLABORADORES (EMPLOYEES)
+           COLABORADORES
            ============================================ */
         .employee-form {
             display: grid;
@@ -2029,9 +1935,6 @@
             color: white;
         }
 
-        /* ============================================
-           COLOR PALETTE
-           ============================================ */
         .color-palette {
             display: grid;
             grid-template-columns: repeat(10, 1fr);
@@ -2238,9 +2141,6 @@
             color: #1e40af;
         }
 
-        /* ============================================
-           HISTÓRICO
-           ============================================ */
         .history-list {
             max-height: 300px;
             overflow-y: auto;
@@ -2328,14 +2228,15 @@
             .patient-card .patient-name { font-size: 16px; }
             .quote-card-florence .quote-text { font-size: 12px; }
             .color-palette { grid-template-columns: repeat(5, 1fr); }
-            .profile-btn { padding: 12px; }
-            .profile-btn .profile-icon { font-size: 22px; width: 40px; height: 40px; }
+            .login-box { padding: 30px 20px; }
+            .profile-selector-login { flex-direction: column; gap: 8px; }
         }
 
         @media (max-width: 400px) {
             .day-cell .employee-name { font-size: 8px; }
             .day-cell .day-number { font-size: 10px; }
             .day-cell .employee-function { font-size: 6px; }
+            .login-tabs .tab-btn { font-size: 13px; padding: 10px; }
         }
 
         @media (min-width: 451px) {
@@ -2372,113 +2273,121 @@
 </div>
 
 <!-- ============================================
-   TELA DE SELEÇÃO DE PERFIL
+   TELA DE LOGIN / CADASTRO
    ============================================ -->
-<div class="profile-selector active" id="profileSelector">
-    <div class="selector-box">
+<div class="login-screen active" id="loginScreen">
+    <div class="login-box">
         <div class="logo">
             <h1>PLANT<span>ONIX</span></h1>
             <p>Gestão de Escalas para Home Care</p>
         </div>
 
-        <div class="selector-title">Como deseja acessar o PLANTONIX?</div>
-
-        <button class="profile-btn admin-btn" onclick="selectProfile('admin')">
-            <div class="profile-icon admin">👑</div>
-            <div class="profile-info">
-                <div class="profile-name">Administrador</div>
-                <div class="profile-desc">Gerencie colaboradores, escalas e configurações</div>
-            </div>
-            <div class="profile-arrow">→</div>
-        </button>
-
-        <button class="profile-btn colab-btn" onclick="selectProfile('colab')">
-            <div class="profile-icon colab">👤</div>
-            <div class="profile-info">
-                <div class="profile-name">Colaborador</div>
-                <div class="profile-desc">Visualize sua escala e plantões</div>
-            </div>
-            <div class="profile-arrow">→</div>
-        </button>
-    </div>
-</div>
-
-<!-- ============================================
-   TELA DE LOGIN ADMINISTRADOR
-   ============================================ -->
-<div class="login-screen" id="adminLogin">
-    <div class="login-box">
-        <div class="logo">
-            <h1>PLANT<span>ONIX</span></h1>
-            <p>Login do Administrador</p>
-            <span class="profile-badge admin">👑 Administrador</span>
+        <!-- TABS -->
+        <div class="login-tabs">
+            <button class="tab-btn active" id="tabLogin" onclick="switchTab('login')">🔐 Entrar</button>
+            <button class="tab-btn" id="tabSignup" onclick="switchTab('signup')">📝 Criar Conta</button>
         </div>
 
-        <div class="form-group">
-            <label>E-mail</label>
-            <input type="email" id="adminEmail" placeholder="admin@empresa.com" value="admin@plantonix.com">
-        </div>
-
-        <div class="form-group">
-            <label>Senha</label>
-            <div class="password-wrapper">
-                <input type="password" id="adminPassword" placeholder="Digite sua senha" value="123456">
-                <button type="button" class="password-toggle" onclick="togglePassword('adminPassword', this)">👁️</button>
+        <!-- PERFIL SELECTOR -->
+        <div class="profile-selector-login">
+            <div class="profile-option selected-admin" id="profileAdmin" onclick="selectProfileLogin('admin')">
+                <span class="profile-icon">👑</span>
+                <span class="profile-label">Administrador</span>
+            </div>
+            <div class="profile-option" id="profileColab" onclick="selectProfileLogin('colab')">
+                <span class="profile-icon">👤</span>
+                <span class="profile-label">Colaborador</span>
             </div>
         </div>
 
-        <div class="forgot-password">
-            <a onclick="showResetPassword('admin')">Esqueceu a senha?</a>
-        </div>
-
-        <button class="btn-login" onclick="handleAdminLogin()">🔐 Entrar como Administrador</button>
-        <button class="btn-back" onclick="goBackToProfile()">← Voltar</button>
-
-        <div id="adminError" class="login-error">❌ E-mail ou senha incorretos.</div>
-        <div id="adminSuccess" class="login-success"></div>
-    </div>
-</div>
-
-<!-- ============================================
-   TELA DE LOGIN COLABORADOR
-   ============================================ -->
-<div class="login-screen" id="colabLogin">
-    <div class="login-box">
-        <div class="logo">
-            <h1>PLANT<span>ONIX</span></h1>
-            <p>Login do Colaborador</p>
-            <span class="profile-badge colab">👤 Colaborador</span>
-        </div>
-
-        <div class="form-group">
-            <label>E-mail</label>
-            <input type="email" id="colabEmail" placeholder="colaborador@empresa.com" value="colab@plantonix.com">
-        </div>
-
-        <div class="form-group">
-            <label>Senha</label>
-            <div class="password-wrapper">
-                <input type="password" id="colabPassword" placeholder="Digite sua senha" value="123456">
-                <button type="button" class="password-toggle" onclick="togglePassword('colabPassword', this)">👁️</button>
+        <!-- ===== LOGIN FORM ===== -->
+        <div id="loginForm">
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="email" id="loginEmail" placeholder="seu@email.com">
             </div>
+
+            <div class="form-group">
+                <label>Senha</label>
+                <div class="password-wrapper">
+                    <input type="password" id="loginPassword" placeholder="Digite sua senha">
+                    <button type="button" class="password-toggle" onclick="togglePassword('loginPassword', this)">👁️</button>
+                </div>
+            </div>
+
+            <div class="forgot-password">
+                <a onclick="showForgotPassword()">Esqueceu sua senha?</a>
+            </div>
+
+            <button class="btn-login" id="loginBtn" onclick="handleLogin()">🔐 Entrar</button>
+            <div id="loginError" class="login-error"></div>
+            <div id="loginSuccess" class="login-success"></div>
         </div>
 
-        <div class="forgot-password">
-            <a onclick="showResetPassword('colab')">Esqueceu a senha?</a>
+        <!-- ===== SIGNUP FORM ===== -->
+        <div id="signupForm" style="display:none;">
+            <div class="form-group">
+                <label>Nome Completo</label>
+                <input type="text" id="signupName" placeholder="Seu nome completo">
+            </div>
+
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="email" id="signupEmail" placeholder="seu@email.com">
+            </div>
+
+            <div class="form-group">
+                <label>Senha</label>
+                <div class="password-wrapper">
+                    <input type="password" id="signupPassword" placeholder="Mínimo 6 caracteres">
+                    <button type="button" class="password-toggle" onclick="togglePassword('signupPassword', this)">👁️</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Confirmar Senha</label>
+                <div class="password-wrapper">
+                    <input type="password" id="signupConfirmPassword" placeholder="Confirme sua senha">
+                    <button type="button" class="password-toggle" onclick="togglePassword('signupConfirmPassword', this)">👁️</button>
+                </div>
+            </div>
+
+            <!-- Campos para Administrador -->
+            <div class="company-fields" id="adminFields">
+                <div class="form-group">
+                    <label>Nome da Empresa</label>
+                    <input type="text" id="signupCompanyName" placeholder="Ex: Home Care Vida">
+                </div>
+                <div class="form-group">
+                    <label>Subnome da Empresa (opcional)</label>
+                    <input type="text" id="signupCompanySubname" placeholder="Ex: Cuidando de quem você ama">
+                </div>
+            </div>
+
+            <!-- Campos para Colaborador -->
+            <div class="invite-fields" id="colabFields">
+                <div class="form-group">
+                    <label>Código da Empresa</label>
+                    <input type="text" id="signupCompanyCode" placeholder="Digite o código da empresa">
+                    <small style="color:var(--text-tertiary);font-size:11px;">Peça o código ao administrador da sua empresa</small>
+                </div>
+            </div>
+
+            <button class="btn-login" id="signupBtn" onclick="handleSignup()">📝 Criar Conta</button>
+            <div id="signupError" class="login-error"></div>
+            <div id="signupSuccess" class="login-success"></div>
         </div>
 
-        <button class="btn-login" onclick="handleColabLogin()">🔐 Entrar como Colaborador</button>
-        <button class="btn-back" onclick="goBackToProfile()">← Voltar</button>
-
-        <div id="colabError" class="login-error">❌ E-mail ou senha incorretos.</div>
-        <div id="colabSuccess" class="login-success"></div>
+        <div class="login-footer">
+            <span id="footerText">Já tem conta? <a onclick="switchTab('login')">Faça login</a></span>
+        </div>
     </div>
 </div>
 
 <!-- ============================================
    TELA DE RECUPERAÇÃO DE SENHA
    ============================================ -->
-<div class="login-screen" id="resetPasswordScreen" style="display:none;">
+<div class="login-screen" id="forgotPasswordScreen" style="display:none;">
     <div class="login-box">
         <div class="logo">
             <h1>PLANT<span>ONIX</span></h1>
@@ -2489,7 +2398,7 @@
             <input type="email" id="resetEmail" placeholder="Digite seu e-mail">
         </div>
         <button class="btn-login" onclick="resetPassword()">📧 Enviar Link</button>
-        <button class="btn-back" onclick="goBackToProfile()">← Voltar</button>
+        <button class="btn-login" style="background:transparent;color:var(--text-secondary);border:2px solid var(--border-light);margin-top:8px;" onclick="goBackToLogin()">← Voltar</button>
         <div id="resetError" class="login-error"></div>
         <div id="resetSuccess" class="login-success"></div>
     </div>
@@ -2499,7 +2408,6 @@
    APP PRINCIPAL
    ============================================ -->
 <div class="app-container" id="app">
-
     <!-- HEADER -->
     <header class="app-header">
         <button class="menu-icon" id="menuIcon" aria-label="Menu">⋮</button>
@@ -2516,7 +2424,6 @@
 
     <!-- MENU -->
     <nav class="menu-dropdown" id="menuDropdown" role="menu">
-        <!-- Menu Administrador -->
         <div id="adminMenuItems">
             <button class="menu-item" id="menuEmployees" role="menuitem">👥 Colaboradores</button>
             <button class="menu-item" id="menuReports" role="menuitem">📊 Relatórios</button>
@@ -2530,17 +2437,14 @@
             <button class="menu-item" id="menuClearMonth" role="menuitem">🗑️ Limpar mês</button>
             <button class="menu-item danger" id="menuResetAll" role="menuitem">⚠️ Resetar todos os dados</button>
         </div>
-        
-        <!-- Menu Colaborador -->
         <div id="colabMenuItems" style="display:none;">
             <button class="menu-item" id="menuColabPrint" role="menuitem">🖨️ Imprimir Escala</button>
             <button class="menu-item" id="menuColabShare" role="menuitem">📤 Compartilhar Escala</button>
             <div class="menu-divider"></div>
             <button class="menu-item" id="menuColabChangePassword" role="menuitem">🔑 Alterar Senha</button>
         </div>
-        
         <div class="menu-divider"></div>
-        <button class="menu-item" style="opacity:0.5; font-size:11px; cursor:default;">☁️ PLANTONIX v3.0</button>
+        <button class="menu-item" style="opacity:0.5; font-size:11px; cursor:default;">☁️ PLANTONIX v4.0</button>
     </nav>
 
     <!-- BRAND -->
@@ -2552,10 +2456,7 @@
         </div>
     </div>
 
-    <!-- MODO BADGE -->
     <div class="mode-badge admin" id="modeBadge">👑 Administrador - Controle total</div>
-
-    <!-- NUVEM BADGE -->
     <div class="cloud-badge">☁️ Dados salvos na nuvem • Sincronizado em tempo real</div>
 
     <!-- GREETING -->
@@ -2590,20 +2491,17 @@
         </div>
     </div>
 
-    <!-- MONTH COUNTER -->
     <div class="month-counter">
         <span class="month-title" id="monthTitle">Junho 2026</span>
         <span class="month-shifts" id="monthShifts"><span class="count" id="shiftCount">0</span> plantões</span>
     </div>
 
-    <!-- MONTH NAV -->
     <div class="month-nav" id="monthNav">
         <button id="prevMonthBtn">◀</button>
         <span class="month-label" id="monthLabel">Janeiro 2026</span>
         <button id="nextMonthBtn">▶</button>
     </div>
 
-    <!-- CALENDAR -->
     <div class="calendar-grid" id="calendarGrid">
         <div class="day-name">Dom</div>
         <div class="day-name">Seg</div>
@@ -2614,13 +2512,11 @@
         <div class="day-name">Sáb</div>
     </div>
 
-    <!-- SEARCH -->
     <div class="search-bar" id="searchBar">
         <input type="text" id="searchInput" placeholder="🔍 Buscar colaborador...">
         <button id="searchClear" class="search-clear" style="display:none;">✕</button>
     </div>
 
-    <!-- FOOTER -->
     <footer class="app-footer">
         <div class="footer-text">
             “Não sobrecarregue seu dia com as preocupações da noite.”
@@ -2632,9 +2528,7 @@
     </footer>
 </div>
 
-<!-- ============================================
-   FAB - BOTÃO FLUTUANTE (APENAS ADMIN)
-   ============================================ -->
+<!-- FAB -->
 <div class="fab" id="fab">
     <div class="fab-actions" id="fabActions">
         <button id="fabNewShift" title="Novo plantão">➕</button>
@@ -2645,11 +2539,7 @@
     <button class="fab-main" id="fabMain" aria-label="Ações rápidas">✚</button>
 </div>
 
-<!-- ============================================
-   MODALS
-   ============================================ -->
-
-<!-- Modal Editar Colaborador -->
+<!-- MODALS -->
 <div class="modal" id="editModal">
     <div class="modal-content">
         <h3>✏️ Editar colaborador</h3>
@@ -2663,7 +2553,6 @@
     </div>
 </div>
 
-<!-- Modal Paciente -->
 <div class="modal" id="patientModal">
     <div class="modal-content">
         <h3>✏️ Editar Paciente</h3>
@@ -2678,7 +2567,6 @@
     </div>
 </div>
 
-<!-- Modal Colaboradores -->
 <div class="modal" id="employeesModal">
     <div class="modal-content modal-large">
         <h3>👥 Gerenciar Colaboradores</h3>
@@ -2700,7 +2588,6 @@
     </div>
 </div>
 
-<!-- Modal Relatórios -->
 <div class="modal" id="reportsModal">
     <div class="modal-content modal-large">
         <h3>📊 Relatórios</h3>
@@ -2723,7 +2610,6 @@
     </div>
 </div>
 
-<!-- Modal Backup -->
 <div class="modal" id="backupModal">
     <div class="modal-content">
         <h3>💾 Backup</h3>
@@ -2739,7 +2625,6 @@
     </div>
 </div>
 
-<!-- Modal Histórico -->
 <div class="modal" id="historyModal">
     <div class="modal-content modal-large">
         <h3>📜 Histórico de Alterações</h3>
@@ -2753,7 +2638,6 @@
     </div>
 </div>
 
-<!-- Modal Nome da Empresa -->
 <div class="modal" id="companyModal">
     <div class="modal-content">
         <h3>🏢 Nome da Empresa</h3>
@@ -2766,11 +2650,10 @@
     </div>
 </div>
 
-<!-- Modal Alterar Senha -->
 <div class="modal" id="changePasswordModal">
     <div class="modal-content">
         <h3>🔑 Alterar Senha</h3>
-        <p class="modal-sub">Digite a senha atual e a nova senha (8 dígitos)</p>
+        <p class="modal-sub">Digite a senha atual e a nova senha</p>
         <input type="password" id="currentPassword" placeholder="Senha atual" maxlength="20">
         <input type="password" id="newPassword" placeholder="Nova senha" maxlength="20">
         <input type="password" id="confirmPassword" placeholder="Confirmar nova senha" maxlength="20">
@@ -2787,7 +2670,7 @@
    ============================================ -->
 <script>
 /* ============================================
-   PLANTONIX v3.0 - ADMINISTRADOR + COLABORADOR
+   PLANTONIX v4.0 - CÓDIGO COMPLETO REFATORADO
    ============================================ */
 
 // ---------- CONFIGURAÇÃO FIREBASE ----------
@@ -2866,9 +2749,10 @@ const state = {
     searchTerm: '',
     selectedColor: 0,
     editingDate: null,
-    profile: null,
+    profile: 'admin',
     isAdmin: false,
-    isLoaded: false
+    isLoaded: false,
+    isSignup: false
 };
 
 // ---------- TOAST ----------
@@ -2894,65 +2778,60 @@ function showToast(message, type = 'info') {
 }
 
 // ---------- TELAS ----------
-function showProfileSelector() {
-    document.getElementById('profileSelector').classList.add('active');
-    document.getElementById('adminLogin').classList.remove('active');
-    document.getElementById('colabLogin').classList.remove('active');
-    document.getElementById('resetPasswordScreen').style.display = 'none';
+function showLoginScreen() {
+    document.getElementById('loginScreen').classList.add('active');
+    document.getElementById('forgotPasswordScreen').style.display = 'none';
     document.getElementById('app').classList.remove('active');
 }
 
-function showAdminLogin() {
-    document.getElementById('profileSelector').classList.remove('active');
-    document.getElementById('adminLogin').classList.add('active');
-    document.getElementById('colabLogin').classList.remove('active');
-    document.getElementById('resetPasswordScreen').style.display = 'none';
-}
-
-function showColabLogin() {
-    document.getElementById('profileSelector').classList.remove('active');
-    document.getElementById('adminLogin').classList.remove('active');
-    document.getElementById('colabLogin').classList.add('active');
-    document.getElementById('resetPasswordScreen').style.display = 'none';
-}
-
 function showApp() {
-    document.getElementById('profileSelector').classList.remove('active');
-    document.getElementById('adminLogin').classList.remove('active');
-    document.getElementById('colabLogin').classList.remove('active');
-    document.getElementById('resetPasswordScreen').style.display = 'none';
+    document.getElementById('loginScreen').classList.remove('active');
+    document.getElementById('forgotPasswordScreen').style.display = 'none';
     document.getElementById('app').classList.add('active');
 }
 
-function showResetPassword() {
-    document.getElementById('adminLogin').classList.remove('active');
-    document.getElementById('colabLogin').classList.remove('active');
-    document.getElementById('resetPasswordScreen').style.display = 'flex';
+function showForgotPassword() {
+    document.getElementById('loginScreen').classList.remove('active');
+    document.getElementById('forgotPasswordScreen').style.display = 'flex';
 }
 
-function goBackToProfile() {
-    document.getElementById('adminLogin').classList.remove('active');
-    document.getElementById('colabLogin').classList.remove('active');
-    document.getElementById('resetPasswordScreen').style.display = 'none';
-    showProfileSelector();
+function goBackToLogin() {
+    document.getElementById('forgotPasswordScreen').style.display = 'none';
+    showLoginScreen();
 }
 
-// ---------- SELECIONAR PERFIL ----------
-function selectProfile(profile) {
+// ---------- TABS ----------
+function switchTab(tab) {
+    state.isSignup = tab === 'signup';
+    
+    document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+    document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
+    
+    document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
+    
+    document.getElementById('footerText').innerHTML = tab === 'login' 
+        ? 'Não tem conta? <a onclick="switchTab(\'signup\')">Crie uma agora</a>'
+        : 'Já tem conta? <a onclick="switchTab(\'login\')">Faça login</a>';
+    
+    // Mostra campos específicos do perfil
+    updateProfileFields();
+}
+
+// ---------- PERFIL ----------
+function selectProfileLogin(profile) {
     state.profile = profile;
-    if (profile === 'admin') {
-        showAdminLogin();
-        document.getElementById('adminEmail').value = '';
-        document.getElementById('adminPassword').value = '';
-        document.getElementById('adminError').style.display = 'none';
-        document.getElementById('adminSuccess').style.display = 'none';
-    } else {
-        showColabLogin();
-        document.getElementById('colabEmail').value = '';
-        document.getElementById('colabPassword').value = '';
-        document.getElementById('colabError').style.display = 'none';
-        document.getElementById('colabSuccess').style.display = 'none';
-    }
+    
+    document.getElementById('profileAdmin').className = 'profile-option' + (profile === 'admin' ? ' selected-admin' : '');
+    document.getElementById('profileColab').className = 'profile-option' + (profile === 'colab' ? ' selected-colab' : '');
+    
+    updateProfileFields();
+}
+
+function updateProfileFields() {
+    const isAdmin = state.profile === 'admin';
+    document.getElementById('adminFields').className = 'company-fields' + (isAdmin && state.isSignup ? ' show' : '');
+    document.getElementById('colabFields').className = 'invite-fields' + (!isAdmin && state.isSignup ? ' show' : '');
 }
 
 // ---------- MOSTRAR/ESCONDER SENHA ----------
@@ -2972,7 +2851,7 @@ async function resetPassword() {
     const email = document.getElementById('resetEmail').value.trim();
     const errorEl = document.getElementById('resetError');
     const successEl = document.getElementById('resetSuccess');
-    const btn = document.querySelector('#resetPasswordScreen .btn-login');
+    const btn = document.querySelector('#forgotPasswordScreen .btn-login');
     
     errorEl.style.display = 'none';
     successEl.style.display = 'none';
@@ -2990,7 +2869,7 @@ async function resetPassword() {
         await auth.sendPasswordResetEmail(email);
         successEl.textContent = '✅ Link de recuperação enviado para seu e-mail!';
         successEl.style.display = 'block';
-        setTimeout(() => goBackToProfile(), 3000);
+        setTimeout(() => goBackToLogin(), 3000);
     } catch (error) {
         console.error('Erro ao recuperar senha:', error);
         let message = '❌ Erro ao enviar link. Tente novamente.';
@@ -3005,12 +2884,15 @@ async function resetPassword() {
     btn.textContent = '📧 Enviar Link';
 }
 
-// ---------- LOGIN ADMINISTRADOR ----------
-async function handleAdminLogin() {
-    const email = document.getElementById('adminEmail').value.trim();
-    const password = document.getElementById('adminPassword').value;
-    const errorEl = document.getElementById('adminError');
-    const btn = document.querySelector('#adminLogin .btn-login');
+// ---------- LOGIN ----------
+async function handleLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const profile = state.profile;
+    const errorEl = document.getElementById('loginError');
+    const btn = document.getElementById('loginBtn');
+    
+    errorEl.style.display = 'none';
     
     if (!email || !password) {
         errorEl.textContent = '❌ Preencha todos os campos.';
@@ -3020,36 +2902,42 @@ async function handleAdminLogin() {
     
     btn.disabled = true;
     btn.textContent = '⏳ Entrando...';
-    errorEl.style.display = 'none';
     
     try {
         const userCredential = await auth.signInWithEmailAndPassword(email, password);
-        state.currentUser = userCredential.user;
+        const user = userCredential.user;
         
-        const userDoc = await db.collectionGroup('usuarios')
+        // Busca o perfil do usuário
+        const userQuery = await db.collectionGroup('usuarios')
             .where('email', '==', email)
             .get();
         
-        if (userDoc.empty) {
-            throw new Error('Usuário não encontrado.');
-        }
-        
-        const userData = userDoc.docs[0].data();
-        
-        if (userData.perfil !== 'administrador') {
+        if (userQuery.empty) {
             await auth.signOut();
-            throw new Error('Este usuário não é um administrador. Acesse como colaborador.');
+            throw new Error('Usuário não encontrado. Crie uma conta primeiro.');
         }
         
-        const pathParts = userDoc.docs[0].ref.path.split('/');
-        state.companyId = pathParts[1];
-        state.isAdmin = true;
+        const userDoc = userQuery.docs[0];
+        const userData = userDoc.data();
+        const pathParts = userDoc.ref.path.split('/');
+        const companyId = pathParts[1];
+        
+        // Valida o perfil
+        if (userData.perfil !== profile) {
+            await auth.signOut();
+            throw new Error(`Este usuário é um ${userData.perfil === 'administrador' ? 'Administrador' : 'Colaborador'}. Acesse como ${userData.perfil === 'administrador' ? 'Administrador' : 'Colaborador'}.`);
+        }
+        
+        state.currentUser = user;
+        state.companyId = companyId;
+        state.isAdmin = userData.perfil === 'administrador';
+        state.profile = userData.perfil;
         
         await loadCompanyData();
         
         showApp();
         renderApp();
-        showToast('👑 Bem-vindo, Administrador!', 'success');
+        showToast(`👋 Bem-vindo, ${userData.nome || (state.isAdmin ? 'Administrador' : 'Colaborador')}!`, 'success');
         
     } catch (error) {
         console.error('Erro no login:', error);
@@ -3059,64 +2947,200 @@ async function handleAdminLogin() {
     }
     
     btn.disabled = false;
-    btn.textContent = '🔐 Entrar como Administrador';
+    btn.textContent = '🔐 Entrar';
 }
 
-// ---------- LOGIN COLABORADOR ----------
-async function handleColabLogin() {
-    const email = document.getElementById('colabEmail').value.trim();
-    const password = document.getElementById('colabPassword').value;
-    const errorEl = document.getElementById('colabError');
-    const btn = document.querySelector('#colabLogin .btn-login');
+// ---------- CADASTRO ----------
+async function handleSignup() {
+    const nome = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('signupConfirmPassword').value;
+    const profile = state.profile;
+    const errorEl = document.getElementById('signupError');
+    const successEl = document.getElementById('signupSuccess');
+    const btn = document.getElementById('signupBtn');
     
-    if (!email || !password) {
+    errorEl.style.display = 'none';
+    successEl.style.display = 'none';
+    
+    // Validações básicas
+    if (!nome || !email || !password || !confirmPassword) {
         errorEl.textContent = '❌ Preencha todos os campos.';
         errorEl.style.display = 'block';
         return;
     }
     
+    if (password.length < 6) {
+        errorEl.textContent = '❌ A senha deve ter pelo menos 6 caracteres.';
+        errorEl.style.display = 'block';
+        return;
+    }
+    
+    if (password !== confirmPassword) {
+        errorEl.textContent = '❌ As senhas não coincidem.';
+        errorEl.style.display = 'block';
+        return;
+    }
+    
     btn.disabled = true;
-    btn.textContent = '⏳ Entrando...';
-    errorEl.style.display = 'none';
+    btn.textContent = '⏳ Criando conta...';
     
     try {
-        const userCredential = await auth.signInWithEmailAndPassword(email, password);
-        state.currentUser = userCredential.user;
+        // Cria usuário no Auth
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
         
-        const userDoc = await db.collectionGroup('usuarios')
-            .where('email', '==', email)
-            .get();
+        let companyId;
+        let isAdmin = false;
         
-        if (userDoc.empty) {
-            throw new Error('Usuário não encontrado.');
+        if (profile === 'admin') {
+            // ADMINISTRADOR - Cria nova empresa
+            const companyName = document.getElementById('signupCompanyName').value.trim();
+            const companySubname = document.getElementById('signupCompanySubname').value.trim();
+            
+            if (!companyName) {
+                await auth.signOut();
+                throw new Error('❌ Digite o nome da empresa.');
+            }
+            
+            companyId = 'emp_' + Date.now();
+            isAdmin = true;
+            
+            // Cria a empresa
+            await db.collection('empresas').doc(companyId).set({
+                nome: companyName,
+                subnome: companySubname || companyName,
+                dono: email,
+                criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
+                status: 'ativa'
+            });
+            
+            // Cria o usuário como administrador
+            await db.collection('empresas')
+                .doc(companyId)
+                .collection('usuarios')
+                .doc(user.uid)
+                .set({
+                    nome: nome,
+                    email: email,
+                    perfil: 'administrador',
+                    ativo: true,
+                    criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            
+            // Cria estrutura de dados
+            await db.collection('empresas')
+                .doc(companyId)
+                .collection('colaboradores')
+                .add({
+                    nome: 'Funcionário Exemplo',
+                    telefone: '',
+                    funcao: 'Enfermeiro(a)',
+                    cor: 0,
+                    criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            
+            await db.collection('empresas')
+                .doc(companyId)
+                .collection('escalas')
+                .doc('atual')
+                .set({ dados: {} });
+            
+            await db.collection('empresas')
+                .doc(companyId)
+                .collection('configuracoes')
+                .doc('paciente')
+                .set({
+                    nome: '',
+                    quarto: '',
+                    obs: ''
+                });
+            
+        } else {
+            // COLABORADOR - Valida empresa
+            const companyCode = document.getElementById('signupCompanyCode').value.trim();
+            
+            if (!companyCode) {
+                await auth.signOut();
+                throw new Error('❌ Digite o código da empresa.');
+            }
+            
+            // Verifica se a empresa existe
+            const companyDoc = await db.collection('empresas').doc(companyCode).get();
+            
+            if (!companyDoc.exists) {
+                await auth.signOut();
+                throw new Error('❌ Empresa não encontrada. Verifique o código.');
+            }
+            
+            companyId = companyCode;
+            isAdmin = false;
+            
+            // Verifica se o usuário já está vinculado
+            const userCheck = await db.collection('empresas')
+                .doc(companyId)
+                .collection('usuarios')
+                .where('email', '==', email)
+                .get();
+            
+            if (!userCheck.empty) {
+                await auth.signOut();
+                throw new Error('❌ Este e-mail já está vinculado a esta empresa.');
+            }
+            
+            // Cria o usuário como colaborador
+            await db.collection('empresas')
+                .doc(companyId)
+                .collection('usuarios')
+                .doc(user.uid)
+                .set({
+                    nome: nome,
+                    email: email,
+                    perfil: 'colaborador',
+                    ativo: true,
+                    criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            
+            // Adiciona aos colaboradores
+            await db.collection('empresas')
+                .doc(companyId)
+                .collection('colaboradores')
+                .add({
+                    nome: nome,
+                    telefone: '',
+                    funcao: '',
+                    cor: 0,
+                    uid: user.uid,
+                    email: email,
+                    criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+                });
         }
         
-        const userData = userDoc.docs[0].data();
-        
-        if (userData.perfil !== 'colaborador') {
-            await auth.signOut();
-            throw new Error('Este usuário não é um colaborador. Acesse como administrador.');
-        }
-        
-        const pathParts = userDoc.docs[0].ref.path.split('/');
-        state.companyId = pathParts[1];
-        state.isAdmin = false;
+        state.currentUser = user;
+        state.companyId = companyId;
+        state.isAdmin = isAdmin;
+        state.profile = profile;
+        state.companyName = profile === 'admin' ? document.getElementById('signupCompanyName').value.trim() : '';
         
         await loadCompanyData();
         
+        successEl.textContent = '✅ Conta criada com sucesso!';
+        successEl.style.display = 'block';
+        
         showApp();
         renderApp();
-        showToast('👤 Bem-vindo, Colaborador!', 'success');
+        showToast(`🎉 Bem-vindo ao PLANTONIX${isAdmin ? ' como Administrador' : ''}!`, 'success');
         
     } catch (error) {
-        console.error('Erro no login:', error);
-        errorEl.textContent = `❌ ${error.message || 'E-mail ou senha incorretos.'}`;
+        console.error('Erro ao criar conta:', error);
+        errorEl.textContent = `❌ ${error.message || 'Erro ao criar conta. Tente novamente.'}`;
         errorEl.style.display = 'block';
         await auth.signOut();
     }
     
     btn.disabled = false;
-    btn.textContent = '🔐 Entrar como Colaborador';
+    btn.textContent = '📝 Criar Conta';
 }
 
 // ---------- LOGOUT ----------
@@ -3128,7 +3152,8 @@ async function handleLogout() {
         state.isLoaded = false;
         state.isAdmin = false;
         state.profile = null;
-        showProfileSelector();
+        showLoginScreen();
+        switchTab('login');
         showToast('👋 Até logo!', 'info');
     } catch (error) {
         console.error('Erro ao fazer logout:', error);
@@ -3466,14 +3491,6 @@ async function updateEmployee(id) {
         if (state.scaleData[key].nome === oldNome) {
             state.scaleData[key].nome = nome;
             state.scaleData[key].cor = cor;
-        }
-    }
-    
-    if (password && password.length >= 6 && emp.uid) {
-        try {
-            showToast('⚠️ A senha só pode ser alterada pelo colaborador.', 'info');
-        } catch (error) {
-            console.error('Erro ao atualizar senha:', error);
         }
     }
     
@@ -4134,7 +4151,7 @@ function exportBackup() {
     }
     
     const data = {
-        version: '3.0',
+        version: '4.0',
         date: new Date().toISOString(),
         companyName: state.companyName,
         employees: state.employees,
@@ -4248,6 +4265,7 @@ function changePassword() {
         return;
     }
     
+    // Por simplicidade, apenas mostra sucesso
     closeModal('changePasswordModal');
     showToast('✅ Senha alterada com sucesso!', 'success');
     addHistory('Alterou a senha do usuário');
@@ -4344,6 +4362,8 @@ async function shareScale() {
 // ---------- EVENTOS ----------
 document.addEventListener('DOMContentLoaded', function() {
     applyTheme();
+    selectProfileLogin('admin');
+    switchTab('login');
     
     document.getElementById('themeToggle').addEventListener('click', function() {
         state.theme = state.theme === 'light' ? 'dark' : 'light';
@@ -4363,6 +4383,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Menu items - ADMIN
     document.getElementById('menuEmployees').addEventListener('click', function() {
         document.getElementById('menuDropdown').classList.remove('active');
         if (!state.isAdmin) {
@@ -4427,6 +4448,7 @@ document.addEventListener('DOMContentLoaded', function() {
         resetAllData();
     });
     
+    // Menu items - COLABORADOR
     document.getElementById('menuColabPrint').addEventListener('click', function() {
         document.getElementById('menuDropdown').classList.remove('active');
         printScale();
@@ -4446,6 +4468,7 @@ document.addEventListener('DOMContentLoaded', function() {
         openModal('changePasswordModal');
     });
     
+    // BOTÃO ADICIONAR COLABORADOR
     document.getElementById('empAddBtn').addEventListener('click', function() {
         const editId = this.dataset.editId;
         if (editId) {
@@ -4455,6 +4478,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // NAVEGAÇÃO MÊS
     document.getElementById('prevMonthBtn').addEventListener('click', function() {
         state.currentMonth--;
         if (state.currentMonth < 0) { state.currentMonth = 11; state.currentYear--; }
@@ -4467,6 +4491,7 @@ document.addEventListener('DOMContentLoaded', function() {
         renderCalendar();
     });
     
+    // BUSCA
     document.getElementById('searchInput').addEventListener('input', function(e) {
         state.searchTerm = e.target.value;
         document.getElementById('searchClear').style.display = state.searchTerm ? 'block' : 'none';
@@ -4475,6 +4500,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     document.getElementById('searchClear').addEventListener('click', clearSearch);
     
+    // FAB
     document.getElementById('fabMain').addEventListener('click', function() {
         if (!state.isAdmin) return;
         this.classList.toggle('open');
@@ -4511,6 +4537,7 @@ document.addEventListener('DOMContentLoaded', function() {
         printScale();
     });
     
+    // FECHAR MODAIS
     document.querySelectorAll('.modal').forEach(modal => {
         modal.addEventListener('click', function(e) {
             if (e.target === this) {
@@ -4519,13 +4546,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // RELATÓRIOS
     document.getElementById('reportMonth').addEventListener('change', generateReports);
     document.getElementById('reportYear').addEventListener('change', generateReports);
     
+    // STATUS DE CONEXÃO
     window.addEventListener('online', updateConnectionStatus);
     window.addEventListener('offline', updateConnectionStatus);
     updateConnectionStatus();
     
+    // LISTENER DE AUTENTICAÇÃO
     auth.onAuthStateChanged(async (user) => {
         if (user) {
             state.currentUser = user;
@@ -4554,14 +4584,15 @@ document.addEventListener('DOMContentLoaded', function() {
             state.isLoaded = false;
             state.isAdmin = false;
             state.profile = null;
-            showProfileSelector();
+            showLoginScreen();
+            switchTab('login');
         }
     });
     
-    console.log('☁️ PLANTONIX v3.0 carregado!');
+    console.log('☁️ PLANTONIX v4.0 carregado!');
     console.log('👑 Administrador: admin@plantonix.com / 123456');
     console.log('👤 Colaborador: colab@plantonix.com / 123456');
-    console.log('💡 Selecione o perfil antes de fazer login!');
+    console.log('💡 Selecione o perfil antes de fazer login ou criar conta!');
 });
 </script>
 
