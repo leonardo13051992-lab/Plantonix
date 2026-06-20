@@ -147,176 +147,80 @@
         /* ============================================
            TELA DE LOGIN (NOVO)
            ============================================ */
-        .login-screen {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: var(--bg-secondary);
-            padding: 20px;
-            width: 100%;
-        }
+        
+        <div class="login-screen active" id="loginScreen">
+    <div class="login-box">
+        <div class="logo">
+            <h1>PLANT<span>ONIX</span></h1>
+            <p>Escala de Plantões na Nuvem</p>
+        </div>
 
-        .login-screen.active {
-            display: flex;
-        }
+        <div style="background:#dbeafe;padding:10px 14px;border-radius:10px;margin-bottom:20px;font-size:13px;color:#1e40af;text-align:center;">
+            ☁️ <strong>Dados salvos na nuvem!</strong><br>
+            Crie sua conta e comece a usar
+        </div>
 
-        .login-box {
-            background: var(--bg-primary);
-            border-radius: var(--radius-xl);
-            padding: 40px 30px;
-            max-width: 420px;
-            width: 100%;
-            box-shadow: var(--shadow-xl);
-            transition: background var(--transition);
-        }
+        <!-- CAMPOS DE CADASTRO (NOVO) -->
+        <div id="signupFields" style="display:none;">
+            <div class="form-group">
+                <label>Nome da Empresa</label>
+                <input type="text" id="signupCompanyName" placeholder="Ex: Home Care Vida" value="Minha Empresa">
+            </div>
+            <div class="form-group">
+                <label>Seu Nome</label>
+                <input type="text" id="signupName" placeholder="Seu nome completo" value="Administrador">
+            </div>
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="email" id="signupEmail" placeholder="seu@email.com">
+            </div>
+            <div class="form-group">
+                <label>Senha</label>
+                <div style="display:flex; align-items:center; gap:8px; background:var(--bg-primary); border:2px solid var(--border-light); border-radius:var(--radius-md);">
+                    <input type="password" id="signupPassword" placeholder="Digite sua senha (mínimo 6 caracteres)" style="border:none; flex:1; padding:12px 14px; font-size:15px; font-weight:500; outline:none; background:transparent; color:var(--text-primary);">
+                    <button type="button" onclick="togglePassword('signupPassword', this)" style="background:none; border:none; padding:8px 12px; cursor:pointer; font-size:18px; color:var(--text-tertiary);">👁️</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Confirmar Senha</label>
+                <div style="display:flex; align-items:center; gap:8px; background:var(--bg-primary); border:2px solid var(--border-light); border-radius:var(--radius-md);">
+                    <input type="password" id="signupConfirmPassword" placeholder="Confirme sua senha" style="border:none; flex:1; padding:12px 14px; font-size:15px; font-weight:500; outline:none; background:transparent; color:var(--text-primary);">
+                    <button type="button" onclick="togglePassword('signupConfirmPassword', this)" style="background:none; border:none; padding:8px 12px; cursor:pointer; font-size:18px; color:var(--text-tertiary);">👁️</button>
+                </div>
+            </div>
+            <button class="btn-login" onclick="createAccount()">🚀 Criar Conta</button>
+            <button class="btn-secondary" onclick="showLoginForm()" style="margin-top:8px;">← Voltar ao Login</button>
+            <div id="signupError" class="login-error"></div>
+            <div id="signupSuccess" class="login-success"></div>
+        </div>
 
-        .login-box .logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+        <!-- CAMPOS DE LOGIN -->
+        <div id="loginFields">
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="email" id="loginEmail" placeholder="seu@email.com">
+            </div>
+            <div class="form-group">
+                <label>Senha</label>
+                <div style="display:flex; align-items:center; gap:8px; background:var(--bg-primary); border:2px solid var(--border-light); border-radius:var(--radius-md);">
+                    <input type="password" id="loginPassword" placeholder="Digite sua senha" style="border:none; flex:1; padding:12px 14px; font-size:15px; font-weight:500; outline:none; background:transparent; color:var(--text-primary);">
+                    <button type="button" onclick="togglePassword('loginPassword', this)" style="background:none; border:none; padding:8px 12px; cursor:pointer; font-size:18px; color:var(--text-tertiary);">👁️</button>
+                </div>
+            </div>
+            <button class="btn-login" onclick="handleLogin()">🔐 Entrar</button>
+            <div class="login-divider">ou</div>
+            <button class="btn-secondary" onclick="showSignupForm()">📝 Criar Conta Grátis</button>
+            <div id="loginError" class="login-error">❌ E-mail ou senha incorretos.</div>
+            <div id="loginSuccess" class="login-success">✅ Conta criada com sucesso!</div>
+        </div>
 
-        .login-box .logo h1 {
-            font-size: 32px;
-            font-weight: 900;
-            color: var(--text-primary);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
+        <div class="login-footer">
+            <a href="#" onclick="showSignupForm()">Não tem conta? Cadastre-se</a>
+        </div>
+    </div>
+</div>
 
-        .login-box .logo h1 span {
-            color: var(--primary);
-        }
-
-        .login-box .logo p {
-            color: var(--text-tertiary);
-            font-size: 14px;
-            margin-top: 4px;
-        }
-
-        .login-box .form-group {
-            margin-bottom: 16px;
-        }
-
-        .login-box .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 4px;
-        }
-
-        .login-box .form-group input {
-            width: 100%;
-            padding: 12px 14px;
-            border: 2px solid var(--border-light);
-            border-radius: var(--radius-md);
-            font-size: 15px;
-            font-weight: 500;
-            outline: none;
-            transition: border-color 0.15s, box-shadow 0.15s;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-        }
-
-        .login-box .form-group input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(var(--primary-rgb, 45, 64, 89), 0.1);
-        }
-
-        .login-box .btn-login {
-            width: 100%;
-            padding: 14px;
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            border-radius: var(--radius-md);
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.15s, box-shadow 0.15s;
-            margin-top: 8px;
-        }
-
-        .login-box .btn-login:active {
-            transform: scale(0.96);
-        }
-
-        .login-box .btn-login:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .login-box .btn-secondary {
-            width: 100%;
-            padding: 12px;
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            border-radius: var(--radius-md);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition);
-            margin-top: 8px;
-        }
-
-        .login-box .btn-secondary:active {
-            transform: scale(0.96);
-            background: var(--primary);
-            color: white;
-        }
-
-        .login-box .login-error {
-            color: var(--danger);
-            font-size: 13px;
-            font-weight: 500;
-            text-align: center;
-            margin-top: 12px;
-            display: none;
-        }
-
-        .login-box .login-success {
-            color: var(--success);
-            font-size: 13px;
-            font-weight: 500;
-            text-align: center;
-            margin-top: 12px;
-            display: none;
-        }
-
-        .login-box .login-divider {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin: 20px 0;
-            color: var(--text-tertiary);
-            font-size: 13px;
-        }
-
-        .login-box .login-divider::before,
-        .login-box .login-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border-light);
-        }
-
-        .login-box .login-footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 13px;
-            color: var(--text-tertiary);
-        }
-
-        .login-box .login-footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        /* ============================================
+         /* ============================================
            APP CONTAINER
            ============================================ */
         .app-container {
@@ -4208,6 +4112,324 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('📧 Demo: demo@plantonix.com / 123456');
     console.log('💡 Todos os dados são salvos na nuvem e compartilhados');
 });
+
+
+
+    // ============================================
+// FUNÇÕES DE CADASTRO E MOSTRAR SENHA
+// ============================================
+
+// ---------- MOSTRAR/ESCONDER SENHA ----------
+function togglePassword(inputId, button) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        button.textContent = '🙈';
+    } else {
+        input.type = 'password';
+        button.textContent = '👁️';
+    }
+}
+
+// ---------- ALTERNAR ENTRE LOGIN E CADASTRO ----------
+function showSignupForm() {
+    document.getElementById('loginFields').style.display = 'none';
+    document.getElementById('signupFields').style.display = 'block';
+    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('signupError').style.display = 'none';
+    document.getElementById('signupSuccess').style.display = 'none';
+}
+
+function showLoginForm() {
+    document.getElementById('signupFields').style.display = 'none';
+    document.getElementById('loginFields').style.display = 'block';
+    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('signupError').style.display = 'none';
+    document.getElementById('signupSuccess').style.display = 'none';
+}
+
+// ---------- CRIAR CONTA (COM VALIDAÇÃO) ----------
+async function createAccount() {
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('signupConfirmPassword').value;
+    const companyName = document.getElementById('signupCompanyName').value.trim() || 'Minha Empresa';
+    const userName = document.getElementById('signupName').value.trim() || 'Administrador';
+    
+    const errorEl = document.getElementById('signupError');
+    const successEl = document.getElementById('signupSuccess');
+    const btn = document.querySelector('#signupFields .btn-login');
+    
+    // Validações
+    errorEl.style.display = 'none';
+    successEl.style.display = 'none';
+    
+    if (!email) {
+        errorEl.textContent = '❌ Digite seu e-mail.';
+        errorEl.style.display = 'block';
+        return;
+    }
+    
+    if (!password || password.length < 6) {
+        errorEl.textContent = '❌ A senha deve ter pelo menos 6 caracteres.';
+        errorEl.style.display = 'block';
+        return;
+    }
+    
+    if (password !== confirmPassword) {
+        errorEl.textContent = '❌ As senhas não coincidem.';
+        errorEl.style.display = 'block';
+        return;
+    }
+    
+    btn.disabled = true;
+    btn.textContent = '⏳ Criando...';
+    
+    try {
+        // 1. Cria usuário no Firebase Auth
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        
+        // 2. Gera um ID único para a empresa
+        const companyId = 'emp_' + Date.now();
+        
+        // 3. Cria a empresa no Firestore
+        await db.collection('empresas').doc(companyId).set({
+            nome: companyName,
+            subnome: companyName,
+            criadoEm: new Date().toISOString(),
+            dono: email
+        });
+        
+        // 4. Adiciona o usuário como DONO da empresa
+        await db.collection('empresas')
+            .doc(companyId)
+            .collection('usuarios')
+            .doc(user.uid)
+            .set({
+                nome: userName,
+                email: email,
+                role: 'dono',
+                criadoEm: new Date().toISOString()
+            });
+        
+        // 5. Cria estrutura de dados vazia
+        await db.collection('empresas')
+            .doc(companyId)
+            .collection('dados')
+            .doc('escala')
+            .set({ dados: {} });
+        
+        await db.collection('empresas')
+            .doc(companyId)
+            .collection('dados')
+            .doc('paciente')
+            .set({
+                nome: '',
+                quarto: '',
+                obs: ''
+            });
+        
+        // 6. Adiciona um funcionário de exemplo (opcional)
+        await db.collection('empresas')
+            .doc(companyId)
+            .collection('funcionarios')
+            .add({
+                nome: 'Funcionário Exemplo',
+                telefone: '',
+                funcao: 'Enfermeiro(a)',
+                cor: 0
+            });
+        
+        // 7. Salva no estado e carrega os dados
+        state.currentUser = user;
+        state.companyId = companyId;
+        state.companyName = companyName;
+        state.isDono = true;
+        
+        // 8. Carrega os dados da empresa
+        await loadCompanyData();
+        
+        // 9. Mostra sucesso e entra no app
+        successEl.textContent = '✅ Conta criada com sucesso!';
+        successEl.style.display = 'block';
+        
+        showApp();
+        renderApp();
+        showToast('🎉 Bem-vindo ao PLANTONIX!', 'success');
+        
+    } catch (error) {
+        console.error('Erro ao criar conta:', error);
+        
+        let errorMessage = '❌ Erro ao criar conta. Tente novamente.';
+        if (error.code === 'auth/email-already-in-use') {
+            errorMessage = '❌ Este e-mail já está em uso. Faça login ou use outro e-mail.';
+        } else if (error.code === 'auth/invalid-email') {
+            errorMessage = '❌ E-mail inválido. Digite um e-mail válido.';
+        } else if (error.code === 'auth/weak-password') {
+            errorMessage = '❌ Senha muito fraca. Use pelo menos 6 caracteres.';
+        }
+        
+        errorEl.textContent = errorMessage;
+        errorEl.style.display = 'block';
+    }
+    
+    btn.disabled = false;
+    btn.textContent = '🚀 Criar Conta';
+}
+
+// ---------- FUNÇÃO PARA CARREGAR DADOS DA EMPRESA (ATUALIZADA) ----------
+async function loadCompanyData() {
+    if (!state.currentUser || !state.companyId) return;
+    
+    const companyId = state.companyId;
+    
+    try {
+        // Busca dados da empresa
+        const companyDoc = await db.collection('empresas').doc(companyId).get();
+        if (companyDoc.exists) {
+            const data = companyDoc.data();
+            state.companyName = data.nome || data.subnome || 'Minha Empresa';
+        }
+        
+        // Busca se o usuário é dono
+        const userDoc = await db.collection('empresas')
+            .doc(companyId)
+            .collection('usuarios')
+            .doc(state.currentUser.uid)
+            .get();
+        
+        if (userDoc.exists) {
+            const userData = userDoc.data();
+            state.isDono = userData.role === 'dono';
+        }
+        
+        // Busca escala
+        const scaleDoc = await db.collection('empresas')
+            .doc(companyId)
+            .collection('dados')
+            .doc('escala')
+            .get();
+        
+        if (scaleDoc.exists) {
+            state.scaleData = scaleDoc.data().dados || {};
+        }
+        
+        // Busca funcionários
+        const employeesSnapshot = await db.collection('empresas')
+            .doc(companyId)
+            .collection('funcionarios')
+            .get();
+        
+        state.employees = [];
+        employeesSnapshot.forEach(doc => {
+            state.employees.push({ id: doc.id, ...doc.data() });
+        });
+        
+        // Busca paciente
+        const patientDoc = await db.collection('empresas')
+            .doc(companyId)
+            .collection('dados')
+            .doc('paciente')
+            .get();
+        
+        if (patientDoc.exists) {
+            const patientData = patientDoc.data();
+            state.patientName = patientData.nome || '';
+            state.patientRoom = patientData.quarto || '';
+            state.patientObs = patientData.obs || '';
+        }
+        
+        // Busca histórico
+        const historySnapshot = await db.collection('empresas')
+            .doc(companyId)
+            .collection('historico')
+            .orderBy('data', 'desc')
+            .limit(50)
+            .get();
+        
+        state.history = [];
+        historySnapshot.forEach(doc => {
+            state.history.push(doc.data());
+        });
+        
+        console.log('✅ Dados carregados da nuvem!');
+        console.log(`📊 ${state.employees.length} funcionários, ${Object.keys(state.scaleData).length} dias`);
+
+    } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        showToast('⚠️ Erro ao carregar dados da nuvem.', 'error');
+    }
+}
+
+// ---------- FUNÇÃO handleLogin (ATUALIZADA) ----------
+async function handleLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const errorEl = document.getElementById('loginError');
+    const btn = document.querySelector('#loginFields .btn-login');
+    
+    if (!email || !password) {
+        errorEl.textContent = '❌ Preencha todos os campos.';
+        errorEl.style.display = 'block';
+        return;
+    }
+    
+    btn.disabled = true;
+    btn.textContent = '⏳ Entrando...';
+    errorEl.style.display = 'none';
+    
+    try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        state.currentUser = userCredential.user;
+        
+        // Busca a empresa do usuário
+        const empresasSnapshot = await db.collection('empresas')
+            .where('dono', '==', email)
+            .get();
+        
+        if (empresasSnapshot.empty) {
+            // Tenta buscar por usuário
+            const userQuery = await db.collectionGroup('usuarios')
+                .where('email', '==', email)
+                .get();
+            
+            if (userQuery.empty) {
+                throw new Error('Nenhuma empresa encontrada para este usuário.');
+            }
+            
+            // Pega a primeira empresa encontrada
+            const userDoc = userQuery.docs[0];
+            const pathParts = userDoc.ref.path.split('/');
+            const companyId = pathParts[1];
+            state.companyId = companyId;
+        } else {
+            const companyDoc = empresasSnapshot.docs[0];
+            state.companyId = companyDoc.id;
+        }
+        
+        await loadCompanyData();
+        
+        showApp();
+        renderApp();
+        showToast('✅ Bem-vindo ao PLANTONIX!', 'success');
+        
+    } catch (error) {
+        console.error('Erro no login:', error);
+        
+        let errorMessage = '❌ E-mail ou senha incorretos.';
+        if (error.message) {
+            errorMessage = `❌ ${error.message}`;
+        }
+        errorEl.textContent = errorMessage;
+        errorEl.style.display = 'block';
+    }
+    
+    btn.disabled = false;
+    btn.textContent = '🔐 Entrar';
+}
+
+    
 </script>
 
 </body>
